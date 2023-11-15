@@ -1,4 +1,4 @@
-package pizzaProntoGUI.view;
+package de.thb.dim.pizzaProntoGUI.view;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;

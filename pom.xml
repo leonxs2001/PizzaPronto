@@ -49,7 +49,7 @@
                     <archive>
                         <manifest>
                             <mainClass>
-                                de.thb.dim.pizzaProntoGUI.GUI_Main
+                                GUI_Main
                             </mainClass>
                         </manifest>
                     </archive>
