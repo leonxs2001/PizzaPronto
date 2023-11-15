@@ -1,4 +1,4 @@
-package de.thb.dim.pizzaProntoGUI.view;
+package pizzaProntoGUI.view;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;

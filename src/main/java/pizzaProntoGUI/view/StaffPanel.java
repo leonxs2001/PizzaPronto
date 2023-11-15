@@ -1,7 +1,6 @@
-package de.thb.dim.pizzaProntoGUI.view;
+package pizzaProntoGUI.view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -18,36 +17,26 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-import de.thb.dim.pizzaPronto.valueObjects.Gender;
-
 @SuppressWarnings("serial")
-public class CustomerPanel extends JPanel {
+public class StaffPanel extends JPanel {
 
 	private JPanel headerPanel;
 	private JPanel addPanel;
 	private JPanel tablePanel;
 	private JPanel hintPanel;
-	private JPanel datePanel;
 	private JTextField firstNameTextField;
 	private JTextField lastNameTextField;
-	private JTextField yearTextField;
-	private JTextField houseNoTextField;
-	private JTextField streetTextField;
-	private JLabel dateOfBirthLabel;
+	private JTextField personnelNoTextField;
 	private JLabel firstNameLabel;
 	private JLabel lastNameLabel;
-	private JLabel genderLabel;
+	private JLabel colorApronLabel;
 	private JLabel addTopicLabel;
 	private JLabel tableTopicLabel;
 	private JLabel hintLabel;
-	private JLabel day;
-	private JLabel month;
-	private JLabel year;
-	private JLabel streetLabel;
-	private JLabel houseNoLabel;
-	private JComboBox<Gender> genderComboBox;
-	private JComboBox<Integer> dayComboBox;
-	private JComboBox<Integer> monthComboBox;
+	private JLabel positionLabel;
+	private JLabel personnelNoLabel;
+	private JComboBox<String> colorComboBox;
+	private JComboBox<String> employeeTypeComboBox;
 	private DefaultButton addButton;
 	private DefaultButton removeButton;
 	private DefaultButton printButton;
@@ -55,7 +44,7 @@ public class CustomerPanel extends JPanel {
 	private JScrollPane tableScrollPane;
 	private DefaultTableModel tableModel;
 
-	public CustomerPanel() {
+	public StaffPanel() {
 		setOpaque(true);
 		setBackground(new Color(0xeaeaea));
 		setBorder(BorderFactory.createMatteBorder(5, 0, 0, 0, new ImageIcon("gui/de/thb/dim/pizzaProntoGUI/images/border.png")));
@@ -78,14 +67,11 @@ public class CustomerPanel extends JPanel {
 		addPanel = new JPanel();
 		addPanel.setBackground(Color.WHITE);
 		addPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		addPanel.setPreferredSize(new Dimension(500,0));
 		addComponentsToAddPanel(addPanel);
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 1;
 		c.gridheight = 1;
-		c.weightx = 0;
-		c.weighty = 1;
 		c.insets = new Insets(10, 30, 10, 10);
 		add(addPanel, c);
 
@@ -121,10 +107,12 @@ public class CustomerPanel extends JPanel {
 	private void addComponentsToHintPanel(JPanel hintPanel) {
 		hintPanel.setLayout(new GridBagLayout());
 		hintLabel = new JLabel("<html><p><strong><span style=\"font-size: 10px;\">Hinweis</span></strong></p>\n" + 
-				"<p><span style=\"font-size: 10px;\">Es koennen die Exceptions CustomerNoDateOfBirthException und CustomerTooYoungException ausgegeben werden, " +
-				"indem entweder kein Jahr angegeben wird bzw. das Alter kleiner als 18 Jahre ist.</span></p></html>");
-		
-		
+				"<p><span style=\"font-size: 10px;\">Um einen neuen Angestaellten hinzuzufuegen, muss die gesamte " +
+				"Vererbungshierarchie, welche in Uebung 4 eingefuehrt wurde, implementiert sein. " +
+				"Durch die vereinfachten Initalisierungskonstruktoren, reicht zum Erstellen eines Objekts " +
+				"der Vor- und Nachname, sowie die Personalnummer. Alle anderen Attribute koennen im Nachhinein " +
+				" ueber die Tabelle editiert werden. Dafuer muessen saemtliche getter und setter richtig " +
+				"implementiert sein. Die Farbe der Schuerze kann mit Farbnamen eingegeben werden. Bspw. 'black' oder 'red'.</span></p></html>");
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
@@ -142,162 +130,81 @@ public class CustomerPanel extends JPanel {
 		
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 1;
 		
-		addTopicLabel = new JLabel("Add a Customer");
+		addTopicLabel = new JLabel("Add an Employee");
 		addTopicLabel.setFont(new Font("Arial", Font.PLAIN, 24));
 		addTopicLabel.setForeground(Color.DARK_GRAY);
 		c.gridx = 0;
 		c.gridy = 0;
-		c.gridwidth = 2;
 		c.insets = new Insets(10, 12, 0, 10);
 		addPanel.add(addTopicLabel, c);
+		
+		positionLabel = new JLabel("Position:");
+		c.gridx = 0;
+		c.gridy = 1;
+		c.insets = new Insets(10, 12, 0, 10);
+		addPanel.add(positionLabel, c);
+		
+		String[] employeeType = {"Chef", "Delivery Man"};
+		employeeTypeComboBox = new JComboBox<String>(employeeType);
+		c.gridx = 0;
+		c.gridy = 2;
+		c.insets = new Insets(0, 10, 0, 10);
+		addPanel.add(employeeTypeComboBox, c);
+		
+		personnelNoLabel = new JLabel("Personnel No:");
+		c.gridx = 0;
+		c.gridy = 3;
+		c.insets = new Insets(10, 12, 0, 10);
+		addPanel.add(personnelNoLabel, c);
+		
+		personnelNoTextField = new JTextField();
+		c.gridx = 0;
+		c.gridy = 4;
+		c.insets = new Insets(0, 10, 10, 10);
+		addPanel.add(personnelNoTextField, c);
 				
 		firstNameLabel = new JLabel("First Name:");
 		c.gridx = 0;
-		c.gridy = 2;
-		c.gridwidth = 2;
-		c.insets = new Insets(10, 12, 0, 10);
+		c.gridy = 5;
+		c.insets = new Insets(0, 12, 0, 10);
 		addPanel.add(firstNameLabel, c);
 		
 		firstNameTextField = new JTextField();
 		c.gridx = 0;
-		c.gridy = 3;
-		c.gridwidth = 2;
+		c.gridy = 6;
 		c.insets = new Insets(0, 10, 10, 10);
 		addPanel.add(firstNameTextField, c);
 		
 		lastNameLabel = new JLabel("Last Name:");
 		c.gridx = 0;
-		c.gridy = 4;
-		c.gridwidth = 2;
+		c.gridy = 7;
 		c.insets = new Insets(0, 12, 0, 10);
 		addPanel.add(lastNameLabel, c);
 		
 		lastNameTextField = new JTextField();
 		c.gridx = 0;
-		c.gridy = 5;
-		c.gridwidth = 2;
+		c.gridy = 8;
 		c.insets = new Insets(0, 10, 10, 10);
 		addPanel.add(lastNameTextField, c);
-
-		streetLabel = new JLabel("Street:");
-		c.gridx = 0;
-		c.gridy = 6;
-		c.gridwidth = 1;
-		c.insets = new Insets(0, 12, 0, 10);
-		c.weightx = 1;
-		addPanel.add(streetLabel, c);
 		
-		streetTextField = new JTextField();
-		GridBagConstraints c8 = new GridBagConstraints();
-		c8.gridx = 0;
-		c8.gridy = 7;
-		c8.gridwidth = 1;
-		c8.insets = new Insets(0, 10, 10, 10);
-		c8.fill = GridBagConstraints.HORIZONTAL;
-		addPanel.add(streetTextField, c8);
+//		colorApronLabel = new JLabel("Apron Color:");
+//		c.gridx = 0;
+//		c.gridy = 9;
+//		c.insets = new Insets(0, 12, 0, 10);
+//		addPanel.add(colorApronLabel, c);
+//		
+//		String[] colors = {"White", "Black", "Red", "Green", "Blue", "Yellow", "Pink"};
+//		colorComboBox = new JComboBox<String>(colors);
+//		c.gridx = 0;
+//		c.gridy = 10;
+//		c.insets = new Insets(0, 10, 20, 10);
+//		addPanel.add(colorComboBox, c);
 		
-		houseNoLabel = new JLabel("No:");
-		c.gridx = 1;
-		c.gridy = 6;
-		c.gridwidth = 1;
-		c.insets = new Insets(0, 12, 0, 10);
-		c.weightx = 0.2;
-		addPanel.add(houseNoLabel, c);
-		
-		houseNoTextField = new JTextField();
-		GridBagConstraints c9 = new GridBagConstraints();
-		c9.gridx = 1;
-		c9.gridy = 7;
-		c9.gridwidth = 1;
-		c9.insets = new Insets(0, 10, 10, 10);
-		c9.fill = GridBagConstraints.HORIZONTAL;
-		addPanel.add(houseNoTextField, c9);
-
-		datePanel = new JPanel(new GridBagLayout());
-		datePanel.setBackground(Color.WHITE);
-		c.gridx = 0;
-		c.gridy = 9;
-		c.gridwidth = 2;
-		c.insets = new Insets(10, 9, 25, 10);
-		addPanel.add(datePanel, c);
-		
-		dateOfBirthLabel = new JLabel("Date of Birth:");
-		GridBagConstraints c7 = new GridBagConstraints();
-		c7.gridx = 0;
-		c7.gridy = 0;
-		c7.gridwidth = 4;
-		c7.anchor = GridBagConstraints.FIRST_LINE_START;
-		c7.insets = new Insets(0,3,10,0);
-		datePanel.add(dateOfBirthLabel, c7);
-		
-		day = new JLabel("Day:");
-		GridBagConstraints c1 = new GridBagConstraints();
-		c1.gridx = 0;
-		c1.gridy = 1;
-		datePanel.add(day, c1);
-		
-		Integer[] days = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
-		dayComboBox = new JComboBox<Integer>(days);
-		GridBagConstraints c2 = new GridBagConstraints();
-		c2.gridx = 1;
-		c2.gridy = 1;
-		datePanel.add(dayComboBox, c2);
-		
-		month = new JLabel("Month:");
-		GridBagConstraints c3 = new GridBagConstraints();
-		c3.gridx = 2;
-		c3.gridy = 1;
-		datePanel.add(month, c3);
-		
-		Integer[] months = {1,2,3,4,5,6,7,8,9,10,11,12};
-		monthComboBox = new JComboBox<Integer>(months);
-		GridBagConstraints c4 = new GridBagConstraints();
-		c4.gridx = 3;
-		c4.gridy = 1;
-		datePanel.add(monthComboBox, c4);
-		
-		year = new JLabel("Year:");
-		GridBagConstraints c5 = new GridBagConstraints();
-		c5.gridx = 0;
-		c5.gridy = 2;
-		c5.insets = new Insets(10,3,0,0);
-		datePanel.add(year, c5);
-		
-		yearTextField = new JTextField();
-		GridBagConstraints c6 = new GridBagConstraints();
-		c6.gridx = 1;
-		c6.gridy = 2;
-		c6.fill = GridBagConstraints.HORIZONTAL;
-		c6.insets = new Insets(10,0,0,0);
-		datePanel.add(yearTextField, c6);
-		
-		
-		genderLabel = new JLabel("Gender:");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 10;
-		c.gridwidth = 2;
-		c.insets = new Insets(0, 12, 5, 10);
-		addPanel.add(genderLabel, c);
-		
-//		String[] genders = {"female", "male", "diverse"};
-		
-		genderComboBox = new JComboBox<>(Gender.values());
-//		genderComboBox.setEditable(true);
+		addButton = new DefaultButton("Add Employee");
 		c.gridx = 0;
 		c.gridy = 11;
-		c.gridwidth = 2;
-		c.insets = new Insets(0, 10, 20, 10);
-		addPanel.add(genderComboBox, c);
-		
-		addButton = new DefaultButton("Add Customer");
-		c.gridx = 0;
-		c.gridy = 12;
-		c.gridwidth = 2;
-		c.weighty = 1;
-		c.insets = new Insets(0, 12, 10, 12);
+		c.insets = new Insets(0, 13, 20, 13);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = GridBagConstraints.LAST_LINE_END;
 		addPanel.add(addButton, c);
@@ -309,7 +216,7 @@ public class CustomerPanel extends JPanel {
 
 		GridBagConstraints c = new GridBagConstraints();
 
-		String[] columns = { "Object", "Customer ID", "First Name", "Last Name", "Street", "No.", "Gender", "Age", "hashCode"};
+		String[] columns = { "Object", "Type", "Personnel No", "First Name", "Last Name", "Street", "No", "Salery", "Vacation Days", "Drivers License", "Apron Color", "hashCode" };
 		tableModel = new DefaultTableModel();
 		tableModel.setColumnIdentifiers(columns);
 		table = new JTable(tableModel);
@@ -320,13 +227,15 @@ public class CustomerPanel extends JPanel {
 		table.setShowGrid(false);
 		table.getTableHeader().setOpaque(false);
 		table.getTableHeader().setBackground(new Color(240, 240, 240));
-
 //		table.getTableHeader().setFont(new Font("Arial", Font.PLAIN, 14));
 		table.setSelectionBackground(new Color(0x50c443));
+		table.putClientProperty("terminateEditOnFocusLost", true);
+
 		
-		tableTopicLabel = new JLabel("Your current Customers");
+		tableTopicLabel = new JLabel("Your current Employees");
 		tableTopicLabel.setFont(new Font("Arial", Font.PLAIN, 24));
 		tableTopicLabel.setForeground(Color.DARK_GRAY);
+		
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = 2;
@@ -356,13 +265,13 @@ public class CustomerPanel extends JPanel {
 		c.anchor = GridBagConstraints.FIRST_LINE_END;
 		c.insets = new Insets(0, 10, 10, 10);
 		tablePanel.add(printButton, c);
+
 		
-		removeButton = new DefaultButton("Remove Customer");
+		removeButton = new DefaultButton("Remove Employee");
 		c.gridx = 1;
 		c.gridy = 2;
 		c.weighty = 0;
 		c.weightx = 0;
-		c.gridwidth = 1;
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.FIRST_LINE_END;
 		c.insets = new Insets(0, 10, 10, 10);
@@ -383,7 +292,7 @@ public class CustomerPanel extends JPanel {
 		c.weightx = 1;
 		headerPanel.add(headerLabelSmall, c);
 		
-		JLabel headerLabelLarge = new JLabel("Customers");
+		JLabel headerLabelLarge = new JLabel("Employees");
 		headerLabelLarge.setFont(new Font("Helvetica", Font.PLAIN, 30));
 		headerLabelLarge.setForeground(new Color(0x606060));
 		c.gridx = 0;
@@ -391,28 +300,8 @@ public class CustomerPanel extends JPanel {
 		headerPanel.add(headerLabelLarge, c);
 	}
 
-	public JPanel getHeaderPanel() {
-		return headerPanel;
-	}
-
-	public void setHeaderPanel(JPanel headerPanel) {
-		this.headerPanel = headerPanel;
-	}
-
 	public JPanel getAddPanel() {
 		return addPanel;
-	}
-
-	public void setAddPanel(JPanel addPanel) {
-		this.addPanel = addPanel;
-	}
-
-	public JPanel getTablePanel() {
-		return tablePanel;
-	}
-
-	public void setTablePanel(JPanel tablePanel) {
-		this.tablePanel = tablePanel;
 	}
 
 	public JPanel getHintPanel() {
@@ -421,70 +310,6 @@ public class CustomerPanel extends JPanel {
 
 	public void setHintPanel(JPanel hintPanel) {
 		this.hintPanel = hintPanel;
-	}
-
-	public JPanel getDatePanel() {
-		return datePanel;
-	}
-
-	public void setDatePanel(JPanel datePanel) {
-		this.datePanel = datePanel;
-	}
-
-	public JTextField getFirstNameTextField() {
-		return firstNameTextField;
-	}
-
-	public void setFirstNameTextField(JTextField firstNameTextField) {
-		this.firstNameTextField = firstNameTextField;
-	}
-
-	public JTextField getLastNameTextField() {
-		return lastNameTextField;
-	}
-
-	public void setLastNameTextField(JTextField lastNameTextField) {
-		this.lastNameTextField = lastNameTextField;
-	}
-
-	public JTextField getYearTextField() {
-		return yearTextField;
-	}
-
-	public void setYearTextField(JTextField yearTextField) {
-		this.yearTextField = yearTextField;
-	}
-
-	public JLabel getDateOfBirthLabel() {
-		return dateOfBirthLabel;
-	}
-
-	public void setDateOfBirthLabel(JLabel dateOfBirthLabel) {
-		this.dateOfBirthLabel = dateOfBirthLabel;
-	}
-
-	public JLabel getFirstNameLabel() {
-		return firstNameLabel;
-	}
-
-	public void setFirstNameLabel(JLabel firstNameLabel) {
-		this.firstNameLabel = firstNameLabel;
-	}
-
-	public JLabel getLastNameLabel() {
-		return lastNameLabel;
-	}
-
-	public void setLastNameLabel(JLabel lastNameLabel) {
-		this.lastNameLabel = lastNameLabel;
-	}
-
-	public JLabel getGenderLabel() {
-		return genderLabel;
-	}
-
-	public void setGenderLabel(JLabel genderLabel) {
-		this.genderLabel = genderLabel;
 	}
 
 	public JLabel getAddTopicLabel() {
@@ -511,52 +336,72 @@ public class CustomerPanel extends JPanel {
 		this.hintLabel = hintLabel;
 	}
 
-	public JLabel getDay() {
-		return day;
+	public DefaultButton getRemoveButton() {
+		return removeButton;
 	}
 
-	public void setDay(JLabel day) {
-		this.day = day;
+	public void setRemoveButton(DefaultButton removeButton) {
+		this.removeButton = removeButton;
 	}
 
-	public JLabel getMonth() {
-		return month;
+	public void setAddPanel(JPanel addPanel) {
+		this.addPanel = addPanel;
 	}
 
-	public void setMonth(JLabel month) {
-		this.month = month;
+	public JPanel getTablePanel() {
+		return tablePanel;
 	}
 
-	public JLabel getYear() {
-		return year;
+	public void setTablePanel(JPanel tablePanel) {
+		this.tablePanel = tablePanel;
 	}
 
-	public void setYear(JLabel year) {
-		this.year = year;
+	public JTextField getFirstNameTextField() {
+		return firstNameTextField;
 	}
 
-	public JComboBox<Gender> getGenderComboBox() {
-		return genderComboBox;
+	public void setFirstNameTextField(JTextField firstNameTextField) {
+		this.firstNameTextField = firstNameTextField;
 	}
 
-	public void setGenderComboBox(JComboBox<Gender> genderComboBox) {
-		this.genderComboBox = genderComboBox;
+	public JTextField getLastNameTextField() {
+		return lastNameTextField;
 	}
 
-	public JComboBox<Integer> getDayComboBox() {
-		return dayComboBox;
+	public void setLastNameTextField(JTextField lastNameTextField) {
+		this.lastNameTextField = lastNameTextField;
 	}
 
-	public void setDayComboBox(JComboBox<Integer> dayComboBox) {
-		this.dayComboBox = dayComboBox;
+	public JLabel getFirstNameLabel() {
+		return firstNameLabel;
 	}
 
-	public JComboBox<Integer> getMonthComboBox() {
-		return monthComboBox;
+	public void setFirstNameLabel(JLabel firstNameLabel) {
+		this.firstNameLabel = firstNameLabel;
 	}
 
-	public void setMonthComboBox(JComboBox<Integer> monthComboBox) {
-		this.monthComboBox = monthComboBox;
+	public JLabel getLastNameLabel() {
+		return lastNameLabel;
+	}
+
+	public void setLastNameLabel(JLabel lastNameLabel) {
+		this.lastNameLabel = lastNameLabel;
+	}
+
+	public JLabel getColorApronLabel() {
+		return colorApronLabel;
+	}
+
+	public void setColorApronLabel(JLabel colorApronLabel) {
+		this.colorApronLabel = colorApronLabel;
+	}
+
+	public JComboBox<String> getColorComboBox() {
+		return colorComboBox;
+	}
+
+	public void setColorComboBox(JComboBox<String> colorComboBox) {
+		this.colorComboBox = colorComboBox;
 	}
 
 	public DefaultButton getAddButton() {
@@ -565,14 +410,6 @@ public class CustomerPanel extends JPanel {
 
 	public void setAddButton(DefaultButton addButton) {
 		this.addButton = addButton;
-	}
-
-	public DefaultButton getRemoveButton() {
-		return removeButton;
-	}
-
-	public void setRemoveButton(DefaultButton removeButton) {
-		this.removeButton = removeButton;
 	}
 
 	public JTable getTable() {
@@ -599,6 +436,30 @@ public class CustomerPanel extends JPanel {
 		this.tableModel = tableModel;
 	}
 
+	public JPanel getHeaderPanel() {
+		return headerPanel;
+	}
+
+	public void setHeaderPanel(JPanel headerPanel) {
+		this.headerPanel = headerPanel;
+	}
+
+	public JLabel getPositionLabel() {
+		return positionLabel;
+	}
+
+	public void setPositionLabel(JLabel positionLabel) {
+		this.positionLabel = positionLabel;
+	}
+
+	public JComboBox<String> getEmployeeTypeComboBox() {
+		return employeeTypeComboBox;
+	}
+
+	public void setEmployeeTypeComboBox(JComboBox<String> employeeTypeComboBox) {
+		this.employeeTypeComboBox = employeeTypeComboBox;
+	}
+
 	public DefaultButton getPrintButton() {
 		return printButton;
 	}
@@ -607,21 +468,12 @@ public class CustomerPanel extends JPanel {
 		this.printButton = printButton;
 	}
 
-	public JTextField getHouseNoTextField() {
-		return houseNoTextField;
+	public JTextField getPersonnelNoTextField() {
+		return personnelNoTextField;
 	}
 
-	public void setHouseNoTextField(JTextField houseNoTextField) {
-		this.houseNoTextField = houseNoTextField;
+	public void setPersonnelNoTextField(JTextField personnelNoTextField) {
+		this.personnelNoTextField = personnelNoTextField;
 	}
-
-	public JTextField getStreetTextField() {
-		return streetTextField;
-	}
-
-	public void setStreetTextField(JTextField streetTextField) {
-		this.streetTextField = streetTextField;
-	}
-
 
 }

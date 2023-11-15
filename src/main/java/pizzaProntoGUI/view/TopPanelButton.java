@@ -1,4 +1,4 @@
-package de.thb.dim.pizzaProntoGUI.view;
+package pizzaProntoGUI.view;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
