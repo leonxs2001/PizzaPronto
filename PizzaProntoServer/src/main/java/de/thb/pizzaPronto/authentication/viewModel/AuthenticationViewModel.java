@@ -1,0 +1,23 @@
+package de.thb.pizzaPronto.authentication.viewModel;
+
+import de.thb.pizzaPronto.authentication.data.AuthenticatedUserVO;
+import de.thb.pizzaPronto.authentication.data.UserVO;
+import de.thb.pizzaPronto.authentication.model.AuthenticationService;
+import de.thb.pizzaPronto.authentication.model.Exception.WrongUserCredentialsException;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+@AllArgsConstructor
+@Service
+@Controller
+public class AuthenticationViewModel {
+    private final AuthenticationService authenticationService;
+
+    @GetMapping("/authenticate")
+    public AuthenticatedUserVO authenticateUser(@RequestBody UserVO user) throws WrongUserCredentialsException {
+        return authenticationService.authenticateUser(user);
+    }
+}
