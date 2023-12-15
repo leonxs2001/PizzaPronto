@@ -2,6 +2,8 @@ package de.thb.pizzaPronto.authentication.data;
 
 import de.thb.pizzaPronto.authentication.data.Exception.IdNotFoundException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ public class UserDAO implements IUserDAO{
         if(user == null){
             throw new NullPointerException("User should not be null.");
         }
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         int appearanceIndex = users.indexOf(user);
         if(appearanceIndex != -1){

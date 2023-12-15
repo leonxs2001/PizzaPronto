@@ -1,5 +1,6 @@
 package de.thb.pizzaPronto.authentication.data;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,24 +19,22 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 public class UserVO implements UserDetails {
+    private static int nextId = 0;
+
     private Integer id;
 
     private String username;
 
     private String password;
 
-    private Role role;
+    private RoleVO role;
 
 
-    public UserVO(String username, String password, Role role) {
+    public UserVO(String username, String password, RoleVO role) {
+        setId(nextId++);
         setUsername(username);
         setPassword(password);
         setRole(role);
-    }
-
-    public void setPassword(String password){
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        this.password = passwordEncoder.encode(password);
     }
 
     @Override

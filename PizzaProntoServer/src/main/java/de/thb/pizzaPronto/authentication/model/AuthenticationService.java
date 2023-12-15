@@ -19,7 +19,7 @@ public class AuthenticationService implements IAuthenticationService {
     private final AuthenticationManager authManager;
 
     @Override
-    public AuthenticatedUserVO authenticateUser(UserVO user) throws WrongUserCredentialsException {
+    public AuthenticatedUserVO authenticateUser(UserVO user){
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                 user.getUsername(), user.getPassword());
 

@@ -1,5 +1,6 @@
-package de.thb.pizzaPronto.authentication.data;
+package de.thb.dim.pizzaProntoGUI.authentication.data;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,13 +8,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class AuthenticatedUserVO {
 
     private String token;
 
     private String username;
 
-    private RoleVO role;
+    private Role role;
 
     public AuthenticatedUserVO(UserVO user, String token){
         this.setToken(token);

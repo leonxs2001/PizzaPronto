@@ -1,7 +1,7 @@
 package de.thb.pizzaPronto;
 
 import de.thb.pizzaPronto.authentication.data.IUserDAO;
-import de.thb.pizzaPronto.authentication.data.Role;
+import de.thb.pizzaPronto.authentication.data.RoleVO;
 import de.thb.pizzaPronto.authentication.data.UserVO;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
@@ -15,8 +15,8 @@ public class MyApplicationRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Role defaultRole = new Role("default");
-        Role adminRole = new Role("admin");
+        RoleVO defaultRole = new RoleVO("default");
+        RoleVO adminRole = new RoleVO("admin");
         userDAO.saveUser(new UserVO("default", "passwort", defaultRole));
         userDAO.saveUser(new UserVO("admin", "passwort", adminRole));
     }
