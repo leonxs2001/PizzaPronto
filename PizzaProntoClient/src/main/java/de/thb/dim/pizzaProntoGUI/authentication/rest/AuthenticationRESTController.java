@@ -3,10 +3,10 @@ package de.thb.dim.pizzaProntoGUI.authentication.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.thb.dim.pizzaProntoGUI.authentication.data.AuthenticatedUserVO;
 import de.thb.dim.pizzaProntoGUI.authentication.data.UserVO;
+import de.thb.dim.pizzaProntoGUI.Exception.NoAuthenticatedUserException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -17,38 +17,28 @@ import java.net.http.HttpResponse;
 public class AuthenticationRESTController implements IAuthenticationRESTController {
     private AuthenticatedUserVO authenticatedUser;
 
+    private final String AUTHENTICATION_URL = API_URL + "/authenticate";
+
     @Override
     public boolean login(UserVO user) {
 
-        String apiUrl = "http://localhost:8080/authenticate";
 
-        // Erstelle einen HttpClient
         HttpClient httpClient = HttpClient.newHttpClient();
 
         try {
-            // Konvertiere das UserVO-Objekt in JSON
             ObjectMapper objectMapper = new ObjectMapper();
             String userJson = objectMapper.writeValueAsString(user);
 
-            // Erstelle die Anfrage mit POST-Body
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(apiUrl))
+                    .uri(URI.create(AUTHENTICATION_URL))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(userJson))
                     .build();
 
-            // Sende die Anfrage und erhalte die Antwort
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-            // Überprüfe, ob die Anfrage erfolgreich war (Statuscode 200)
             if (response.statusCode() == 200) {
-                // Konvertiere die JSON-Antwort in ein AuthenticatedUserVO-Objekt
-                AuthenticatedUserVO authenticatedUser = objectMapper.readValue(response.body(), AuthenticatedUserVO.class);
-
-                // Verarbeite das AuthenticatedUserVO-Objekt
-                System.out.println(authenticatedUser.getToken());
-                System.out.println(authenticatedUser.getUsername());
-                System.out.println(authenticatedUser.getRole());
+                this.authenticatedUser = objectMapper.readValue(response.body(), AuthenticatedUserVO.class);
                 return true;
             } else {
                 return false;
@@ -69,5 +59,16 @@ public class AuthenticationRESTController implements IAuthenticationRESTControll
     @Override
     public AuthenticatedUserVO getAuthenticatedUserVO() {
         return authenticatedUser;
+    }
+
+    @Override
+    public HttpRequest authenticateHttpRequest(HttpRequest request) throws NoAuthenticatedUserException {
+        if (hasAuthenticatedUser()) {
+            return HttpRequest.newBuilder(request, (name, value) -> true)
+                    .header("Authorization", "Bearer " + authenticatedUser.getToken())
+                    .build();
+        } else {
+            throw new NoAuthenticatedUserException("There is no given AuthenticatedUser.");
+        }
     }
 }

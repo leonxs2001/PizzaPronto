@@ -8,11 +8,16 @@ import de.thb.dim.pizzaProntoGUI.controller.CustomerController;
 import de.thb.dim.pizzaProntoGUI.controller.MenuController;
 import de.thb.dim.pizzaProntoGUI.controller.OrderController;
 import de.thb.dim.pizzaProntoGUI.controller.StaffController;
+import de.thb.dim.pizzaProntoGUI.customer.data.CustomerVO;
+import de.thb.dim.pizzaProntoGUI.customer.data.Gender;
+import de.thb.dim.pizzaProntoGUI.customer.rest.CustomerRESTController;
 import de.thb.dim.pizzaProntoGUI.view.MainView;
+
+import java.time.LocalDate;
 
 public class GUI_Main {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 		/*SwingUtilities.invokeLater(new Runnable() {
 			
 			@SuppressWarnings("unused")
@@ -44,9 +49,14 @@ public class GUI_Main {
 			}
 		});*/
 
-		AuthenticationRESTController authenticationRESTController = new AuthenticationRESTController();
-		authenticationRESTController.login(new UserVO("default", "passwort"));
+        AuthenticationRESTController authenticationRESTController = new AuthenticationRESTController();
+        if (authenticationRESTController.login(new UserVO("default", "passwort"))) {
 
-	}
+            CustomerRESTController customerRESTController = new CustomerRESTController(authenticationRESTController);
+            boolean res = customerRESTController.addCustomer(new CustomerVO(Gender.F, LocalDate.now(), "Schönber", "Leon", "Genthiner Str.", 91));
+            System.out.println(res);
+        }
+
+    }
 
 }

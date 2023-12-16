@@ -3,7 +3,6 @@ package de.thb.pizzaPronto.authentication.model;
 import de.thb.pizzaPronto.authentication.data.AuthenticatedUserVO;
 import de.thb.pizzaPronto.authentication.data.IUserDAO;
 import de.thb.pizzaPronto.authentication.data.UserVO;
-import de.thb.pizzaPronto.authentication.model.Exception.WrongUserCredentialsException;
 import de.thb.pizzaPronto.security.JwtTokenUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,4 +1,4 @@
-package de.thb.pizzaPronto.authentication.data.Exception;
+package de.thb.pizzaPronto.Exception;
 
 public class IdNotFoundException extends Exception{
     public IdNotFoundException(){

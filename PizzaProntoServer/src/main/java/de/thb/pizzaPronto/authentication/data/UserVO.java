@@ -72,7 +72,7 @@ public class UserVO implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserVO user = (UserVO) o;
-        return Objects.equals(id, user.id) && Objects.equals(username, user.username);
+        return Objects.equals(username, user.username);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package de.thb.pizzaPronto.authentication.data;
 
-import de.thb.pizzaPronto.authentication.data.Exception.IdNotFoundException;
+import de.thb.pizzaPronto.Exception.IdNotFoundException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -1,4 +1,4 @@
-package de.thb.pizzaPronto.authentication.model.Exception;
+package de.thb.pizzaPronto.Exception;
 
 public class WrongUserCredentialsException extends Exception{
     public WrongUserCredentialsException(){

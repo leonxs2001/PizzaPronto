@@ -1,6 +1,6 @@
 package de.thb.pizzaPronto.security;
 
-import de.thb.pizzaPronto.authentication.data.Exception.IdNotFoundException;
+import de.thb.pizzaPronto.Exception.IdNotFoundException;
 import de.thb.pizzaPronto.authentication.data.IUserDAO;
 import de.thb.pizzaPronto.authentication.data.UserVO;
 import jakarta.servlet.FilterChain;
