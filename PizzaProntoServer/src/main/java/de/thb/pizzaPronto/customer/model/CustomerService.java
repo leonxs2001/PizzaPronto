@@ -15,8 +15,8 @@ public class CustomerService implements ICustomerService{
 
 
     @Override
-    public void addCustomer(CustomerVO customer) {
-        customerDAO.saveCustomer(customer);
+    public CustomerVO addCustomer(CustomerVO customer) {
+        return customerDAO.saveCustomer(customer);
     }
 
     @Override

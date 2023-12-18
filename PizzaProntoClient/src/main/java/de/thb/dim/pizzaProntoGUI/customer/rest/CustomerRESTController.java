@@ -1,15 +1,21 @@
 package de.thb.dim.pizzaProntoGUI.customer.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import de.thb.dim.pizzaProntoGUI.Exception.FailedRESTCallException;
+import de.thb.dim.pizzaProntoGUI.Exception.NoAuthenticatedUserException;
 import de.thb.dim.pizzaProntoGUI.authentication.data.AuthenticatedUserVO;
 import de.thb.dim.pizzaProntoGUI.authentication.rest.IAuthenticationRESTController;
 import de.thb.dim.pizzaProntoGUI.customer.data.CustomerVO;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Collections;
 import java.util.List;
 
 public class CustomerRESTController implements ICustomerRESTController{
@@ -22,19 +28,20 @@ public class CustomerRESTController implements ICustomerRESTController{
     }
 
     @Override
-    public boolean addCustomer(CustomerVO customer) {
+    public CustomerVO addCustomer(CustomerVO customer) throws FailedRESTCallException, NoAuthenticatedUserException {
         HttpClient httpClient = HttpClient.newHttpClient();
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.registerModule(new JavaTimeModule());
 
-            String userJson = objectMapper.writeValueAsString(customer);
+            String customerJson = objectMapper.writeValueAsString(customer);
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(CUSTOMER_URL))
                     .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(userJson))
+                    .header("Accept", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(customerJson))
                     .build();
 
             request = authenticationRESTController.authenticateHttpRequest(request);
@@ -42,29 +49,104 @@ public class CustomerRESTController implements ICustomerRESTController{
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 200) {
-                return true;
+                return objectMapper.readValue(response.body(), CustomerVO.class);
             } else {
-                return false;
+                throw new FailedRESTCallException();
             }
 
-        } catch (Exception e) {
+        } catch (InterruptedException | IOException e) {
             e.printStackTrace();
-            return false;
+            throw new FailedRESTCallException();
         }
     }
 
     @Override
-    public boolean deleteCustomer(CustomerVO customer) {
-        return false;
+    public void deleteCustomer(CustomerVO customer) throws FailedRESTCallException, NoAuthenticatedUserException {
+        HttpClient httpClient = HttpClient.newHttpClient();
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.registerModule(new JavaTimeModule());
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(CUSTOMER_URL + "/" + customer.getId()))
+                    .DELETE()
+                    .build();
+
+            request = authenticationRESTController.authenticateHttpRequest(request);
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() != 200) {
+                throw new FailedRESTCallException();
+            }
+
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+            throw new FailedRESTCallException();
+        }
     }
 
     @Override
-    public List<CustomerVO> getAllCustomers(CustomerVO customer) {
-        return null;
+    public List<CustomerVO> getAllCustomers() throws FailedRESTCallException, NoAuthenticatedUserException{
+        HttpClient httpClient = HttpClient.newHttpClient();
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.registerModule(new JavaTimeModule());
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(CUSTOMER_URL))
+                    .header("Accept", "application/json")
+                    .GET()
+                    .build();
+
+            request = authenticationRESTController.authenticateHttpRequest(request);
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                List<CustomerVO> customers = objectMapper.readValue(response.body(), new TypeReference<>() {});
+                return customers;
+            } else {
+                // Handle error or return an empty list
+                return Collections.emptyList();
+            }
+
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+            // Handle exception or return an empty list
+            return Collections.emptyList();
+        }
     }
 
     @Override
-    public boolean updateCustomer(CustomerVO customer) {
-        return false;
+    public void updateCustomer(CustomerVO customer) throws FailedRESTCallException, NoAuthenticatedUserException{
+        HttpClient httpClient = HttpClient.newHttpClient();
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.registerModule(new JavaTimeModule());
+
+            String customerJson = objectMapper.writeValueAsString(customer);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(CUSTOMER_URL))
+                    .header("Content-Type", "application/json")
+                    .PUT(HttpRequest.BodyPublishers.ofString(customerJson))
+                    .build();
+
+            request = authenticationRESTController.authenticateHttpRequest(request);
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() != 200) {
+                throw new FailedRESTCallException();
+            }
+
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+            throw new FailedRESTCallException();
+        }
     }
 }

@@ -19,7 +19,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 public class UserVO implements UserDetails {
-    private static int nextId = 0;
+    private static int nextId = 1;
 
     private Integer id;
 

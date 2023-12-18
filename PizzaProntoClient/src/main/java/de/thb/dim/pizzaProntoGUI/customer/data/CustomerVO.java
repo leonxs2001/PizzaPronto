@@ -43,4 +43,17 @@ public class CustomerVO {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    @Override
+    public String toString() {
+        return "CustomerVO{" +
+                "id=" + id +
+                ", gender=" + gender +
+                ", dateOfBirth=" + dateOfBirth +
+                ", lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", street='" + street + '\'' +
+                ", houseNumber=" + houseNumber +
+                '}';
+    }
 }

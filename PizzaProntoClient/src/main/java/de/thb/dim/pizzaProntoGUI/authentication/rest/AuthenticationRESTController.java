@@ -1,12 +1,14 @@
 package de.thb.dim.pizzaProntoGUI.authentication.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.thb.dim.pizzaProntoGUI.Exception.FailedRESTCallException;
 import de.thb.dim.pizzaProntoGUI.authentication.data.AuthenticatedUserVO;
 import de.thb.dim.pizzaProntoGUI.authentication.data.UserVO;
 import de.thb.dim.pizzaProntoGUI.Exception.NoAuthenticatedUserException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -20,7 +22,7 @@ public class AuthenticationRESTController implements IAuthenticationRESTControll
     private final String AUTHENTICATION_URL = API_URL + "/authenticate";
 
     @Override
-    public boolean login(UserVO user) {
+    public void login(UserVO user) throws FailedRESTCallException {
 
 
         HttpClient httpClient = HttpClient.newHttpClient();
@@ -39,14 +41,14 @@ public class AuthenticationRESTController implements IAuthenticationRESTControll
 
             if (response.statusCode() == 200) {
                 this.authenticatedUser = objectMapper.readValue(response.body(), AuthenticatedUserVO.class);
-                return true;
+
             } else {
-                return false;
+                throw new FailedRESTCallException();
             }
 
-        } catch (Exception e) {
+        } catch (InterruptedException | IOException e) {
             e.printStackTrace();
-            return false;
+            throw new FailedRESTCallException();
         }
 
     }

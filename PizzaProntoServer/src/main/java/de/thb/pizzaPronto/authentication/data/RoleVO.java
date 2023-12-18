@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoleVO {
-    private static int nextId = 0;
+    private static int nextId = 1;
     private Integer id;
     private String name;
 

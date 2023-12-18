@@ -2,6 +2,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import de.thb.dim.pizzaProntoGUI.Exception.FailedRESTCallException;
 import de.thb.dim.pizzaProntoGUI.authentication.data.UserVO;
 import de.thb.dim.pizzaProntoGUI.authentication.rest.AuthenticationRESTController;
 import de.thb.dim.pizzaProntoGUI.controller.CustomerController;
@@ -49,14 +50,28 @@ public class GUI_Main {
 			}
 		});*/
 
-        AuthenticationRESTController authenticationRESTController = new AuthenticationRESTController();
-        if (authenticationRESTController.login(new UserVO("default", "passwort"))) {
+        try {
+            AuthenticationRESTController authenticationRESTController = new AuthenticationRESTController();
+            authenticationRESTController.login(new UserVO("default", "passwort"));
 
             CustomerRESTController customerRESTController = new CustomerRESTController(authenticationRESTController);
-            boolean res = customerRESTController.addCustomer(new CustomerVO(Gender.F, LocalDate.now(), "Schönber", "Leon", "Genthiner Str.", 91));
-            System.out.println(res);
-        }
+            CustomerVO c1 = customerRESTController.addCustomer(new CustomerVO(Gender.F, LocalDate.now(), "Schönber", "Leon", "Genthiner Str.", 91));
+            CustomerVO c2 = customerRESTController.addCustomer(new CustomerVO(Gender.F, LocalDate.now(), "Schönber", "Leon", "Genthiner Str.", 91));
 
+            System.out.println(customerRESTController.getAllCustomers());
+
+            customerRESTController.deleteCustomer(c2);
+
+            System.out.println(customerRESTController.getAllCustomers());
+
+            c1.setLastName("Schönberg");
+            customerRESTController.updateCustomer(c1);
+            System.out.println(customerRESTController.getAllCustomers());
+
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
 }

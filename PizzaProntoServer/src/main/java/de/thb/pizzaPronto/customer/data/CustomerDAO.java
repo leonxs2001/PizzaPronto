@@ -18,7 +18,7 @@ public class CustomerDAO implements ICustomerDAO {
     }
 
     @Override
-    public void saveCustomer(CustomerVO customer) {
+    public CustomerVO saveCustomer(CustomerVO customer) {
         if(customer == null){
             throw new NullPointerException("Customer should not be null.");
         }
@@ -33,6 +33,8 @@ public class CustomerDAO implements ICustomerDAO {
                 customers.add(customer);
             }
         }
+
+        return customer;
     }
 
     @Override

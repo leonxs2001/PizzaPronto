@@ -20,14 +20,14 @@ public class CustomerViewModel {
         return customerService.getAllCustomers();
     }
 
-    @DeleteMapping
-    public void deleteCustomer(@RequestBody int id) throws IdNotFoundException {
+    @DeleteMapping("/{id}")
+    public void deleteCustomer(@PathVariable int id) throws IdNotFoundException {
         customerService.deleteCustomer(id);
     }
 
     @PostMapping
-    public void addCustomer(@RequestBody CustomerVO customerVO){
-        customerService.addCustomer(customerVO);
+    public CustomerVO addCustomer(@RequestBody CustomerVO customerVO){
+        return customerService.addCustomer(customerVO);
     }
 
     @PutMapping

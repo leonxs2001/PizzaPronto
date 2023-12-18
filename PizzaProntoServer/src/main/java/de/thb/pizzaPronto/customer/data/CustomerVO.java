@@ -13,7 +13,7 @@ import java.util.Objects;
 @Getter
 @Setter
 public class CustomerVO {
-    private static int nextId = 0;
+    private static int nextId = 1;
 
     private int id;
     private Gender gender;
