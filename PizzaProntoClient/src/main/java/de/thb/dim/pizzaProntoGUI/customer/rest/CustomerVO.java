@@ -1,4 +1,4 @@
-package de.thb.dim.pizzaProntoGUI.customer.data;
+package de.thb.dim.pizzaProntoGUI.customer.rest;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

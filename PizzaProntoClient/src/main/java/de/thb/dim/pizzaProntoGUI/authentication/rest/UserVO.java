@@ -1,4 +1,4 @@
-package de.thb.dim.pizzaProntoGUI.authentication.data;
+package de.thb.dim.pizzaProntoGUI.authentication.rest;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,9 +38,9 @@ public class UserVO {
         UserVO user = (UserVO) o;
         return Objects.equals(id, user.id) && Objects.equals(username, user.username);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(id, username);
     }
+
 }

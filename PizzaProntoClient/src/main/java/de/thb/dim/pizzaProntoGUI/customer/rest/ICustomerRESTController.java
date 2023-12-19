@@ -2,7 +2,6 @@ package de.thb.dim.pizzaProntoGUI.customer.rest;
 
 import de.thb.dim.pizzaProntoGUI.Exception.FailedRESTCallException;
 import de.thb.dim.pizzaProntoGUI.Exception.NoAuthenticatedUserException;
-import de.thb.dim.pizzaProntoGUI.customer.data.CustomerVO;
 
 import java.util.List;
 

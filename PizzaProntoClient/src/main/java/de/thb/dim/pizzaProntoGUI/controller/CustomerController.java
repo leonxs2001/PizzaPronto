@@ -21,7 +21,7 @@ import de.thb.pizzaPronto.valueObjects.CustomerVO;
 import de.thb.pizzaPronto.valueObjects.Gender;
 import de.thb.pizzaPronto.valueObjects.exceptions.CustomerNoDateOfBirthException;
 import de.thb.pizzaPronto.valueObjects.exceptions.CustomerTooYoungException;
-import de.thb.dim.pizzaProntoGUI.view.CustomerPanel;
+import de.thb.dim.pizzaProntoGUI.customer.gui.CustomerPanel;
 import de.thb.dim.pizzaProntoGUI.view.ExceptionPanel;
 import de.thb.dim.pizzaProntoGUI.view.MainView;
 
@@ -36,135 +36,130 @@ public class CustomerController {
 		CustomerPanel customerPanel = view.getLayoutPanel().getCustomerPanel();
 		
 		JButton addButton = customerPanel.getAddButton();
-		addButton.addActionListener(new ActionListener() {
+		addButton.addActionListener(e -> {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				String lastName = customerPanel.getLastNameTextField().getText();
-				String firstName = customerPanel.getFirstNameTextField().getText();
-				Gender gender = (Gender) customerPanel.getGenderComboBox().getSelectedItem();
-				String street = customerPanel.getStreetTextField().getText();
-				
-				int houseNumber = 0;
-				
-				try {
-					houseNumber = Integer.parseInt(customerPanel.getHouseNoTextField().getText());
-				} catch (NumberFormatException exception) {
-					System.err.println("House number must be an integer." + exception.getMessage());
-				}	
-				
-				
-				int day = (int) customerPanel.getDayComboBox().getSelectedItem();
-				int month = (int) customerPanel.getMonthComboBox().getSelectedItem();
-				String yearAsString = customerPanel.getYearTextField().getText();
-				int yearAsInt = 0;
-				
-				if(!yearAsString.equals(""))
-					yearAsInt = Integer.parseInt(yearAsString);
-				
-				LocalDate dob = null;
-				
-				if(yearAsInt != 0)
-					dob = LocalDate.of(yearAsInt, month, day);
-				
-				CustomerVO customer = null;
-				
-				try {
-					customer = new CustomerVO(lastName, firstName, street, houseNumber, gender, dob);
-				} catch (NullPointerException | CustomerTooYoungException ex) {
-					new ExceptionPanel(ex);
-				}
-				
-				int rowCnt = customerPanel.getTableModel().getRowCount();
-				
-				boolean isEqual = false;
-				
-				if(customer != null) {
-					
-					for(int i = 0; i < rowCnt; i++) {
-						if (customer.equals(customerPanel.getTableModel().getValueAt(i, 0)))
-							isEqual = true;
-					}
-					
-					if(isEqual == true) {
-							EventQueue.invokeLater(new Runnable(){
-								
-								@Override
-								public void run(){
-									JFrame frame = new JFrame("Note");
-														
-									JPanel innerPanel = new JPanel(new GridBagLayout());
-									innerPanel.setOpaque(true);
-									innerPanel.setBackground(Color.WHITE);
-									innerPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-									
-									GridBagConstraints c0 = new GridBagConstraints();
-									
-									JLabel label = new JLabel("This person is already a customer.");
-									label.setFont(new Font("Arial", Font.PLAIN, 18));
-									label.setForeground(new Color(0x606060));
+			String lastName = customerPanel.getLastNameTextField().getText();
+			String firstName = customerPanel.getFirstNameTextField().getText();
+			Gender gender = (Gender) customerPanel.getGenderComboBox().getSelectedItem();
+			String street = customerPanel.getStreetTextField().getText();
 
-									c0.insets = new Insets(20,20,20,20);
-									innerPanel.add(label, c0);
-									
-									JPanel outerPanel = new JPanel(new GridBagLayout());
-									outerPanel.setOpaque(true);
-									outerPanel.setBackground(new Color(0xeaeaea));
-									
-									GridBagConstraints c1 = new GridBagConstraints();
-									c1.insets = new Insets(20,20,20,20);
-									outerPanel.add(innerPanel,c1);
-									
-									frame.add(outerPanel);
-									
-									frame.setLocationRelativeTo(null);
-									frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-									frame.pack();
-									frame.setVisible(true);
-								}
-								
-							});
-						
-					} else {
-						Object[] row = new Object[9];
-						
-						row[0] = customer;
-						row[1] = customer.getId();
-						row[2] = customer.getFirstName();
-						row[3] = customer.getLastName();
-						row[4] = customer.getStreet();
-						row[5] = customer.getHouseNumber();
-						row[6] = customer.getGender();
-						
-						if(customer.getDateOfBirth() != null) {
-							try {
-								row[7] = customer.calculateAge();
-							} catch (CustomerNoDateOfBirthException ex) {
-								new ExceptionPanel(ex);
-							}
-						}
-						
-						row[8] = customer.hashCode();
-							
-						customerPanel.getTableModel().addRow(row);
-						
-						customerPanel.getFirstNameTextField().setText(null);
-						customerPanel.getLastNameTextField().setText(null);
-						customerPanel.getYearTextField().setText(null);
-						customerPanel.getDayComboBox().setSelectedIndex(0);
-						customerPanel.getMonthComboBox().setSelectedIndex(0);
-						customerPanel.getGenderComboBox().setSelectedIndex(0);
-						customerPanel.getStreetTextField().setText(null);
-						customerPanel.getHouseNoTextField().setText(null);
-					}
-					
-				}
-				
-				
-				
+			int houseNumber = 0;
+
+			try {
+				houseNumber = Integer.parseInt(customerPanel.getHouseNoTextField().getText());
+			} catch (NumberFormatException exception) {
+				System.err.println("House number must be an integer." + exception.getMessage());
 			}
-			
+
+
+			int day = (int) customerPanel.getDayComboBox().getSelectedItem();
+			int month = (int) customerPanel.getMonthComboBox().getSelectedItem();
+			String yearAsString = customerPanel.getYearTextField().getText();
+			int yearAsInt = 0;
+
+			if(!yearAsString.equals(""))
+				yearAsInt = Integer.parseInt(yearAsString);
+
+			LocalDate dob = null;
+
+			if(yearAsInt != 0)
+				dob = LocalDate.of(yearAsInt, month, day);
+
+			CustomerVO customer = null;
+
+			try {
+				customer = new CustomerVO(lastName, firstName, street, houseNumber, gender, dob);
+			} catch (NullPointerException | CustomerTooYoungException ex) {
+				new ExceptionPanel(ex);
+			}
+
+			int rowCnt = customerPanel.getTableModel().getRowCount();
+
+			boolean isEqual = false;
+
+			if(customer != null) {
+
+				for(int i = 0; i < rowCnt; i++) {
+					if (customer.equals(customerPanel.getTableModel().getValueAt(i, 0)))
+						isEqual = true;
+				}
+
+				if(isEqual == true) {
+						EventQueue.invokeLater(new Runnable(){
+
+							@Override
+							public void run(){
+								JFrame frame = new JFrame("Note");
+
+								JPanel innerPanel = new JPanel(new GridBagLayout());
+								innerPanel.setOpaque(true);
+								innerPanel.setBackground(Color.WHITE);
+								innerPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+
+								GridBagConstraints c0 = new GridBagConstraints();
+
+								JLabel label = new JLabel("This person is already a customer.");
+								label.setFont(new Font("Arial", Font.PLAIN, 18));
+								label.setForeground(new Color(0x606060));
+
+								c0.insets = new Insets(20,20,20,20);
+								innerPanel.add(label, c0);
+
+								JPanel outerPanel = new JPanel(new GridBagLayout());
+								outerPanel.setOpaque(true);
+								outerPanel.setBackground(new Color(0xeaeaea));
+
+								GridBagConstraints c1 = new GridBagConstraints();
+								c1.insets = new Insets(20,20,20,20);
+								outerPanel.add(innerPanel,c1);
+
+								frame.add(outerPanel);
+
+								frame.setLocationRelativeTo(null);
+								frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+								frame.pack();
+								frame.setVisible(true);
+							}
+
+						});
+
+				} else {
+					Object[] row = new Object[9];
+
+					row[0] = customer;
+					row[1] = customer.getId();
+					row[2] = customer.getFirstName();
+					row[3] = customer.getLastName();
+					row[4] = customer.getStreet();
+					row[5] = customer.getHouseNumber();
+					row[6] = customer.getGender();
+
+					if(customer.getDateOfBirth() != null) {
+						try {
+							row[7] = customer.calculateAge();
+						} catch (CustomerNoDateOfBirthException ex) {
+							new ExceptionPanel(ex);
+						}
+					}
+
+					row[8] = customer.hashCode();
+
+					customerPanel.getTableModel().addRow(row);
+
+					customerPanel.getFirstNameTextField().setText(null);
+					customerPanel.getLastNameTextField().setText(null);
+					customerPanel.getYearTextField().setText(null);
+					customerPanel.getDayComboBox().setSelectedIndex(0);
+					customerPanel.getMonthComboBox().setSelectedIndex(0);
+					customerPanel.getGenderComboBox().setSelectedIndex(0);
+					customerPanel.getStreetTextField().setText(null);
+					customerPanel.getHouseNoTextField().setText(null);
+				}
+
+			}
+
+
+
 		});
 		
 		

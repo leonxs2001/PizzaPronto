@@ -2,8 +2,6 @@ package de.thb.dim.pizzaProntoGUI.authentication.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.thb.dim.pizzaProntoGUI.Exception.FailedRESTCallException;
-import de.thb.dim.pizzaProntoGUI.authentication.data.AuthenticatedUserVO;
-import de.thb.dim.pizzaProntoGUI.authentication.data.UserVO;
 import de.thb.dim.pizzaProntoGUI.Exception.NoAuthenticatedUserException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

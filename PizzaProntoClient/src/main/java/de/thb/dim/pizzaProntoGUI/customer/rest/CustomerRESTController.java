@@ -1,14 +1,11 @@
 package de.thb.dim.pizzaProntoGUI.customer.rest;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import de.thb.dim.pizzaProntoGUI.Exception.FailedRESTCallException;
 import de.thb.dim.pizzaProntoGUI.Exception.NoAuthenticatedUserException;
-import de.thb.dim.pizzaProntoGUI.authentication.data.AuthenticatedUserVO;
 import de.thb.dim.pizzaProntoGUI.authentication.rest.IAuthenticationRESTController;
-import de.thb.dim.pizzaProntoGUI.customer.data.CustomerVO;
 
 import java.io.IOException;
 import java.net.URI;

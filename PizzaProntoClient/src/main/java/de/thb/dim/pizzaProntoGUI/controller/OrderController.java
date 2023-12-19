@@ -44,7 +44,7 @@ import de.thb.pizzaPronto.valueObjects.DishVO;
 import de.thb.pizzaPronto.valueObjects.OrderVO;
 import de.thb.pizzaPronto.valueObjects.StateOfOrderVO;
 import de.thb.pizzaPronto.valueObjects.exceptions.CustomerNoDateOfBirthException;
-import de.thb.dim.pizzaProntoGUI.view.CustomerPanel;
+import de.thb.dim.pizzaProntoGUI.customer.gui.CustomerPanel;
 import de.thb.dim.pizzaProntoGUI.view.DefaultButton;
 import de.thb.dim.pizzaProntoGUI.view.ExceptionPanel;
 import de.thb.dim.pizzaProntoGUI.view.MainView;

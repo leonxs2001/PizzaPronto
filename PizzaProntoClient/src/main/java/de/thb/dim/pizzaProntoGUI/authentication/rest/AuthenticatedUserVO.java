@@ -1,4 +1,4 @@
-package de.thb.dim.pizzaProntoGUI.authentication.data;
+package de.thb.dim.pizzaProntoGUI.authentication.rest;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

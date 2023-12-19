@@ -1,4 +1,4 @@
-package de.thb.dim.pizzaProntoGUI.customer.data;
+package de.thb.dim.pizzaProntoGUI.customer.rest;
 
 public enum Gender {
 	M(1), F(2), I(3), U (4);

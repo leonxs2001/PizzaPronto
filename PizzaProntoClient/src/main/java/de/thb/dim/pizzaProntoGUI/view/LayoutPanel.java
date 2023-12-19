@@ -1,4 +1,9 @@
 package de.thb.dim.pizzaProntoGUI.view;
+import de.thb.dim.pizzaProntoGUI.customer.gui.CustomerPanel;
+import de.thb.dim.pizzaProntoGUI.customer.rest.ICustomerRESTController;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -7,6 +12,8 @@ import java.awt.GridBagLayout;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
+@Setter
+@Getter
 public class LayoutPanel extends JPanel {
 	
 	private TopPanel topPanel;
@@ -17,9 +24,12 @@ public class LayoutPanel extends JPanel {
 	private CustomerPanel customerPanel;
 	private MenuPanel menuPanel;
 	private OrderPanel orderPanel;
+
+	private ICustomerRESTController customerRESTController;
 		
-	public LayoutPanel() {
-		
+	public LayoutPanel(ICustomerRESTController customerRESTController) {
+		setCustomerRESTController(customerRESTController);
+
 		setLayout(new GridBagLayout());
 		
 		GridBagConstraints c = new GridBagConstraints();
@@ -33,7 +43,7 @@ public class LayoutPanel extends JPanel {
 		c.gridheight = 1;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		add(topPanel, c);
-		
+
 		sidePanel = new SidePanel();
 		sidePanel.setPreferredSize(new Dimension(110, 0));
 		c.gridx = 0;
@@ -66,70 +76,6 @@ public class LayoutPanel extends JPanel {
 		sidePanel.setMainPanel(mainPanel);
 		homePanel.setMainPanel(mainPanel);
 
-	}
-
-	public TopPanel getTopPanel() {
-		return topPanel;
-	}
-
-	public void setTopPanel(TopPanel topPanel) {
-		this.topPanel = topPanel;
-	}
-
-	public SidePanel getSidePanel() {
-		return sidePanel;
-	}
-
-	public void setSidePanel(SidePanel sidePanel) {
-		this.sidePanel = sidePanel;
-	}
-
-	public JPanel getMainPanel() {
-		return mainPanel;
-	}
-
-	public void setMainPanel(JPanel mainPanel) {
-		this.mainPanel = mainPanel;
-	}
-
-	public HomePanel getHomePanel() {
-		return homePanel;
-	}
-
-	public void setHomePanel(HomePanel homePanel) {
-		this.homePanel = homePanel;
-	}
-
-	public StaffPanel getStaffPanel2() {
-		return staffPanel2;
-	}
-
-	public void setStaffPanel2(StaffPanel staffPanel2) {
-		this.staffPanel2 = staffPanel2;
-	}
-
-	public CustomerPanel getCustomerPanel() {
-		return customerPanel;
-	}
-
-	public void setCustomerPanel(CustomerPanel customerPanel) {
-		this.customerPanel = customerPanel;
-	}
-
-	public MenuPanel getMenuPanel() {
-		return menuPanel;
-	}
-
-	public void setMenuPanel(MenuPanel menuPanel) {
-		this.menuPanel = menuPanel;
-	}
-
-	public OrderPanel getOrderPanel() {
-		return orderPanel;
-	}
-
-	public void setOrderPanel(OrderPanel orderPanel) {
-		this.orderPanel = orderPanel;
 	}
 	
 

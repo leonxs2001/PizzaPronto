@@ -2,24 +2,20 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import de.thb.dim.pizzaProntoGUI.Exception.FailedRESTCallException;
-import de.thb.dim.pizzaProntoGUI.authentication.data.UserVO;
 import de.thb.dim.pizzaProntoGUI.authentication.rest.AuthenticationRESTController;
 import de.thb.dim.pizzaProntoGUI.controller.CustomerController;
 import de.thb.dim.pizzaProntoGUI.controller.MenuController;
 import de.thb.dim.pizzaProntoGUI.controller.OrderController;
 import de.thb.dim.pizzaProntoGUI.controller.StaffController;
-import de.thb.dim.pizzaProntoGUI.customer.data.CustomerVO;
-import de.thb.dim.pizzaProntoGUI.customer.data.Gender;
 import de.thb.dim.pizzaProntoGUI.customer.rest.CustomerRESTController;
 import de.thb.dim.pizzaProntoGUI.view.MainView;
-
-import java.time.LocalDate;
 
 public class GUI_Main {
 
     public static void main(String[] args) {
-		/*SwingUtilities.invokeLater(new Runnable() {
+        AuthenticationRESTController authenticationRESTController = new AuthenticationRESTController();
+        CustomerRESTController customerRESTController = new CustomerRESTController(authenticationRESTController);
+		SwingUtilities.invokeLater(new Runnable() {
 			
 			@SuppressWarnings("unused")
 			public  void run() {
@@ -41,16 +37,16 @@ public class GUI_Main {
 					e.printStackTrace();
 				}
 				
-				MainView view = new MainView();
+				MainView view = new MainView(authenticationRESTController, customerRESTController);
 				
 				StaffController staffController = new StaffController(view);
 				CustomerController customerController = new CustomerController(view);
 				OrderController orderController = new OrderController(view);
 				MenuController menuController = new MenuController(view);
 			}
-		});*/
+		});
 
-        try {
+        /*try {
             AuthenticationRESTController authenticationRESTController = new AuthenticationRESTController();
             authenticationRESTController.login(new UserVO("default", "passwort"));
 
@@ -71,7 +67,7 @@ public class GUI_Main {
 
         } catch (Exception e) {
             System.out.println(e);
-        }
+        }*/
     }
 
 }

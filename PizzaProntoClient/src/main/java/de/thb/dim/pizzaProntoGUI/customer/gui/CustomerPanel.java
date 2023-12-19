@@ -1,4 +1,4 @@
-package de.thb.dim.pizzaProntoGUI.view;
+package de.thb.dim.pizzaProntoGUI.customer.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import de.thb.dim.pizzaProntoGUI.view.DefaultButton;
 import de.thb.pizzaPronto.valueObjects.Gender;
 
 @SuppressWarnings("serial")
