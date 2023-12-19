@@ -1,29 +1,16 @@
 package de.thb.dim.pizzaProntoGUI.customer.rest;
 
 public enum Gender {
-	M(1), F(2), I(3), U (4);
+	M("male"), F("female"), I("intersex"), U ("unknown");
 
-	private final int number;
+	private final String textRepresentation;
 
-	// Achtung Konstruktor darf nur "default"
-	// oder private sein
-	private Gender(int nr) {
-		number = nr;
-	}
-
-	public int toNumber() {
-		return number;
+	private Gender(String textRepresentation) {
+		this.textRepresentation = textRepresentation;
 	}
 
 	public String toString() {
-		if (number == 1)
-			return "male";
-		if (number == 2)
-			return "female";
-		if (number == 3)
-			return "intersex";
-		else
-			return "unknown";
+		return textRepresentation;
 	}
 
 }
