@@ -20,11 +20,6 @@ public class CustomerService implements ICustomerService{
     }
 
     @Override
-    public void updateCustomer(CustomerVO customer) {
-        customerDAO.saveCustomer(customer);
-    }
-
-    @Override
     public void deleteCustomer(int customerId) throws IdNotFoundException {
         customerDAO.deleteCustomerById(customerId);
     }

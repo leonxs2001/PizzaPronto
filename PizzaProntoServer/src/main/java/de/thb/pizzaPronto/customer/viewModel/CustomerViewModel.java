@@ -29,9 +29,4 @@ public class CustomerViewModel {
     public CustomerVO addCustomer(@RequestBody CustomerVO customerVO){
         return customerService.addCustomer(customerVO);
     }
-
-    @PutMapping
-    public void updateCustomer(@RequestBody CustomerVO customerVO){
-        customerService.updateCustomer(customerVO);
-    }
 }

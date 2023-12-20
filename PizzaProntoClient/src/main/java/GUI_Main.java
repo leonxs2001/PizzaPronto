@@ -2,13 +2,15 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import de.thb.dim.pizzaProntoGUI.authentication.rest.AuthenticationRESTController;
-import de.thb.dim.pizzaProntoGUI.controller.CustomerController;
-import de.thb.dim.pizzaProntoGUI.controller.MenuController;
-import de.thb.dim.pizzaProntoGUI.controller.OrderController;
-import de.thb.dim.pizzaProntoGUI.controller.StaffController;
-import de.thb.dim.pizzaProntoGUI.customer.rest.CustomerRESTController;
-import de.thb.dim.pizzaProntoGUI.view.MainView;
+import de.thb.dim.pizzaProntoView.generalGui.MainGUIController;
+import de.thb.dim.pizzaProntoView.authentication.gui.AuthenticationGUIController;
+import de.thb.dim.pizzaProntoView.authentication.rest.AuthenticationRESTController;
+import de.thb.dim.pizzaProntoView.menu.gui.MenuController;
+import de.thb.dim.pizzaProntoView.order.gui.OrderController;
+import de.thb.dim.pizzaProntoView.staff.gui.StaffController;
+import de.thb.dim.pizzaProntoView.customer.gui.CustomerGUIController;
+import de.thb.dim.pizzaProntoView.customer.rest.CustomerRESTController;
+import de.thb.dim.pizzaProntoView.generalGui.MainView;
 
 public class GUI_Main {
 
@@ -38,9 +40,11 @@ public class GUI_Main {
 				}
 				
 				MainView view = new MainView(authenticationRESTController, customerRESTController);
-				
+
+				MainGUIController mainGUIController = new MainGUIController(authenticationRESTController, customerRESTController, view);
+				AuthenticationGUIController authenticationGUIController = new AuthenticationGUIController(mainGUIController, view.getMainPanel().getLoginPanel());
 				StaffController staffController = new StaffController(view);
-				CustomerController customerController = new CustomerController(view);
+				CustomerGUIController customerGUIController = new CustomerGUIController(mainGUIController, view.getMainPanel().getLayoutPanel().getCustomerPanel());
 				OrderController orderController = new OrderController(view);
 				MenuController menuController = new MenuController(view);
 			}

@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface ICustomerService {
     CustomerVO addCustomer(CustomerVO customer);
-    void updateCustomer(CustomerVO customer);
     void deleteCustomer(int customerId) throws IdNotFoundException;
     List<CustomerVO> getAllCustomers();
 }
