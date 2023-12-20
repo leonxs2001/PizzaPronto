@@ -2,15 +2,15 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import de.thb.dim.pizzaProntoView.generalGui.MainGUIController;
-import de.thb.dim.pizzaProntoView.authentication.gui.AuthenticationGUIController;
-import de.thb.dim.pizzaProntoView.authentication.rest.AuthenticationRESTController;
-import de.thb.dim.pizzaProntoView.menu.gui.MenuController;
-import de.thb.dim.pizzaProntoView.order.gui.OrderController;
-import de.thb.dim.pizzaProntoView.staff.gui.StaffController;
-import de.thb.dim.pizzaProntoView.customer.gui.CustomerGUIController;
-import de.thb.dim.pizzaProntoView.customer.rest.CustomerRESTController;
-import de.thb.dim.pizzaProntoView.generalGui.MainView;
+import de.thb.pizzaPronto.authentication.gui.AuthenticationGUIController;
+import de.thb.pizzaPronto.authentication.rest.AuthenticationRESTController;
+import de.thb.pizzaPronto.customer.gui.CustomerGUIController;
+import de.thb.pizzaPronto.customer.rest.CustomerRESTController;
+import de.thb.pizzaPronto.generalGui.MainGUIController;
+import de.thb.pizzaPronto.generalGui.MainView;
+import de.thb.pizzaPronto.menu.gui.MenuController;
+import de.thb.pizzaPronto.order.gui.OrderController;
+import de.thb.pizzaPronto.staff.gui.StaffController;
 
 public class GUI_Main {
 
