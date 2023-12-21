@@ -74,7 +74,7 @@
                     <archive>
                         <manifest>
                             <mainClass>
-                                GUI_Main
+                                de.thb.pizzaPronto.GUI_Main
                             </mainClass>
                         </manifest>
                     </archive>
