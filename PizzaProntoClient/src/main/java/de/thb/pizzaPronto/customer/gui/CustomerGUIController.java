@@ -59,7 +59,7 @@ public class CustomerGUIController {
     public void addCustomer() {
         try {
             CustomerVO customer = customerPanel.getCustomerFromInputs();
-            customerRESTController.addCustomer(customer);
+            customer = customerRESTController.addCustomer(customer);
             customerPanel.addCustomerToTable(customer);
         } catch (NullPointerException | FailedRESTCallException | NoAuthenticatedUserException ex) {
             new ExceptionPanel(ex);
