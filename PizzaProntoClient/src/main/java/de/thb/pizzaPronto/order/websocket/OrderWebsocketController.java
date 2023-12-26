@@ -2,6 +2,7 @@ package de.thb.pizzaPronto.order.websocket;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import de.thb.pizzaPronto.authentication.rest.IAuthenticationRESTController;
 import de.thb.pizzaPronto.menu.rest.DiscountVO;
 import de.thb.pizzaPronto.menu.rest.MenuVO;
 import de.thb.pizzaPronto.websockets.WebSocketClient;
@@ -9,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.lang.Nullable;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.*;
+import org.springframework.web.socket.WebSocketHttpHeaders;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
@@ -19,6 +21,7 @@ import java.util.concurrent.ExecutionException;
 public class OrderWebsocketController implements IOrderWebsocketController{
     private static String API_URL = "ws://localhost:8080";
     private final IOrderWebsocketGUIController orderWebsocketGUIController;
+    private final IAuthenticationRESTController authenticationRESTController;
 
     @Override
     public void updateDiscount(DiscountVO discount) {
@@ -39,9 +42,9 @@ public class OrderWebsocketController implements IOrderWebsocketController{
         converter.setObjectMapper(objectMapper);
         stompClient.setMessageConverter(converter);
 
-        /*WebSocketHttpHeaders headers = new WebSocketHttpHeaders();
-        headers.add("Authorization" + "Bearer " + authenticatedUser.getToken());*/
-        stompClient.connectAsync(API_URL + "/ws", new MyStompSessionHandler()).get();
+
+        WebSocketHttpHeaders headers = authenticationRESTController.generateWebSocketAuthenticatedHttpHeader();
+        stompClient.connectAsync(API_URL + "/ws", headers, new MyStompSessionHandler()).get();
     }
 
     @Override
@@ -88,12 +91,12 @@ public class OrderWebsocketController implements IOrderWebsocketController{
 
         @Override
         public void handleException(StompSession session, @Nullable StompCommand command, StompHeaders headers, byte[] payload, Throwable exception) {
-            System.out.println("test");
+            orderWebsocketGUIController.showException((Exception) exception);
         }
 
         @Override
         public void handleTransportError(StompSession session, Throwable exception) {
-            System.out.println("test");
+            orderWebsocketGUIController.showException((Exception) exception);
         }
     }
 }

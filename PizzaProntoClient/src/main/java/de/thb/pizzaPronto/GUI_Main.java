@@ -54,7 +54,7 @@ public class GUI_Main {
 				OrderGUIController orderController = new OrderGUIController(view);
 				MenuController menuController = new MenuController(view);
 
-				OrderWebsocketController orderWebsocketController = new OrderWebsocketController(orderController);
+				OrderWebsocketController orderWebsocketController = new OrderWebsocketController(orderController, authenticationRESTController);
 				mainGUIController.attach(orderWebsocketController);
 			}
 		});

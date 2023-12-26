@@ -5,6 +5,7 @@ import de.thb.pizzaPronto.exception.FailedRESTCallException;
 import de.thb.pizzaPronto.exception.NoAuthenticatedUserException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.web.socket.WebSocketHttpHeaders;
 
 import java.io.IOException;
 import java.net.URI;
@@ -70,5 +71,12 @@ public class AuthenticationRESTController implements IAuthenticationRESTControll
         } else {
             throw new NoAuthenticatedUserException("There is no given AuthenticatedUser.");
         }
+    }
+
+    @Override
+    public WebSocketHttpHeaders generateWebSocketAuthenticatedHttpHeader() {
+        WebSocketHttpHeaders headers = new WebSocketHttpHeaders();
+        headers.add("Authorization", "Bearer " + authenticatedUser.getToken());
+        return headers;
     }
 }
