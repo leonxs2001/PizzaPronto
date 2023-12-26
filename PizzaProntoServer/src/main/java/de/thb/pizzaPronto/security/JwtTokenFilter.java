@@ -53,11 +53,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private boolean isWebSocketHandshake(HttpServletRequest request) {
-        return "websocket".equalsIgnoreCase(request.getHeader("Upgrade"))
-                && "Upgrade".equalsIgnoreCase(request.getHeader("Connection"));
-    }
-
     private boolean hasAuthorizationBearer(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
         if (ObjectUtils.isEmpty(header) || !header.startsWith("Bearer")) {

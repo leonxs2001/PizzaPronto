@@ -7,10 +7,13 @@ import de.thb.pizzaPronto.generalGui.DefaultButton;
 import de.thb.pizzaPronto.generalGui.ExceptionPanel;
 import de.thb.pizzaPronto.generalGui.MainView;
 import de.thb.pizzaPronto.menu.gui.MenuPanel;
+import de.thb.pizzaPronto.menu.rest.DiscountVO;
 import de.thb.pizzaPronto.menu.rest.DishVO;
+import de.thb.pizzaPronto.menu.rest.MenuVO;
 import de.thb.pizzaPronto.order.rest.OrderVO;
 import de.thb.pizzaPronto.order.rest.Ordering;
 import de.thb.pizzaPronto.order.rest.StateOfOrderVO;
+import de.thb.pizzaPronto.order.websocket.IOrderWebsocketGUIController;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,7 +25,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.ByteArrayOutputStream;
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.time.format.DateTimeFormatter;
@@ -46,7 +48,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
-public class OrderController {
+public class OrderGUIController implements IOrderWebsocketGUIController {
 	
 	@SuppressWarnings("unused")
 	private MainView view;
@@ -66,7 +68,7 @@ public class OrderController {
 	private DefaultTableModel customerTableModel;
 	private DefaultTableModel menuTableModel;
 
-	public OrderController(MainView view) {
+	public OrderGUIController(MainView view) {
 		
 		this.view = view;		
 		orderPanel = view.getMainPanel().getLayoutPanel().getOrderPanel();
@@ -686,6 +688,21 @@ public class OrderController {
 	
 	public void setView(MainView view) {
 		this.view = view;
+	}
+
+	public void showException(Exception exception){
+		new ExceptionPanel(exception);
+	}
+
+	@Override
+	public void updateDiscount(DiscountVO discount) {
+		System.out.println(discount);
+		//TODO ADD notification to GUI
+	}
+
+	@Override
+	public void updateMenu(MenuVO menu) {
+		//TODO ADD notification
 	}
 
 }

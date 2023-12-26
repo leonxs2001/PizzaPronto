@@ -11,14 +11,15 @@ import de.thb.pizzaPronto.customer.rest.CustomerRESTController;
 import de.thb.pizzaPronto.generalGui.MainGUIController;
 import de.thb.pizzaPronto.generalGui.MainView;
 import de.thb.pizzaPronto.menu.gui.MenuController;
-import de.thb.pizzaPronto.order.gui.OrderController;
+import de.thb.pizzaPronto.order.gui.OrderGUIController;
+import de.thb.pizzaPronto.order.websocket.OrderWebsocketController;
 import de.thb.pizzaPronto.staff.gui.StaffController;
 
 public class GUI_Main {
 
     public static void main(String[] args) {
-        AuthenticationRESTController authenticationRESTController = new AuthenticationRESTController();
-        CustomerRESTController customerRESTController = new CustomerRESTController(authenticationRESTController);
+
+
 		SwingUtilities.invokeLater(new Runnable() {
 			
 			@SuppressWarnings("unused")
@@ -40,6 +41,9 @@ public class GUI_Main {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+
+				AuthenticationRESTController authenticationRESTController = new AuthenticationRESTController();
+				CustomerRESTController customerRESTController = new CustomerRESTController(authenticationRESTController);
 				
 				MainView view = new MainView(authenticationRESTController, customerRESTController);
 
@@ -47,8 +51,11 @@ public class GUI_Main {
 				AuthenticationGUIController authenticationGUIController = new AuthenticationGUIController(mainGUIController, view.getMainPanel().getLoginPanel());
 				StaffController staffController = new StaffController(view);
 				CustomerGUIController customerGUIController = new CustomerGUIController(mainGUIController, view.getMainPanel().getLayoutPanel().getCustomerPanel());
-				OrderController orderController = new OrderController(view);
+				OrderGUIController orderController = new OrderGUIController(view);
 				MenuController menuController = new MenuController(view);
+
+				OrderWebsocketController orderWebsocketController = new OrderWebsocketController(orderController);
+				mainGUIController.attach(orderWebsocketController);
 			}
 		});
 

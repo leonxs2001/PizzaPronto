@@ -27,6 +27,10 @@ public class ApplicationSecurity {
         http
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/authenticate").permitAll()
+                        .requestMatchers("/test").permitAll()
+                        .requestMatchers("/customer/**").authenticated()//TODO change
+                        .requestMatchers("/menu/**").authenticated()//TODO change
+                        .requestMatchers("/ws/**").permitAll()//TODO change
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
