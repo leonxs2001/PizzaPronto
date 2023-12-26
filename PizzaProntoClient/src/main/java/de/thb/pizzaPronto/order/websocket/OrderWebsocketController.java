@@ -5,7 +5,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import de.thb.pizzaPronto.authentication.rest.IAuthenticationRESTController;
 import de.thb.pizzaPronto.menu.rest.DiscountVO;
 import de.thb.pizzaPronto.menu.rest.MenuVO;
-import de.thb.pizzaPronto.websockets.WebSocketClient;
 import lombok.AllArgsConstructor;
 import org.springframework.lang.Nullable;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
