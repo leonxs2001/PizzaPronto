@@ -14,6 +14,9 @@ import java.time.format.DateTimeFormatter;
 @Getter
 @Setter
 public class DiscountVO {
+    private static int nextId = 1;
+
+    private int id;
     private String title;
     private String infoText;
     private LocalDate fromDate;
@@ -22,16 +25,19 @@ public class DiscountVO {
     private LocalTime toTime;
 
 
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
+    public DiscountVO(int id){
+        setId(id);
+    }
+    public void resetId(){
+        setId(nextId++);
+    }
 
-        sb.append(title != null ? title + "\n" : "");
-        sb.append(infoText != null ? infoText : "");
-        sb.append(fromDate != null ? " from " + fromDate.format(DateTimeFormatter.ofLocalizedDate(java.time.format.FormatStyle.SHORT)) : "");
-        sb.append(toDate != null ? " to " + toDate.format(DateTimeFormatter.ofLocalizedDate(java.time.format.FormatStyle.SHORT)) : "");
-        sb.append(fromTime != null ? " from " + fromTime.format(DateTimeFormatter.ofLocalizedTime(java.time.format.FormatStyle.SHORT)) : "");
-        sb.append(toTime != null ? " to " + toTime.format(DateTimeFormatter.ofLocalizedTime(java.time.format.FormatStyle.SHORT)) : "");
-        return sb.toString();
+    public String toString() {
+        return (infoText != null ? infoText : "") +
+                (fromDate != null ? " from " + fromDate.format(DateTimeFormatter.ofLocalizedDate(java.time.format.FormatStyle.SHORT)) : "") +
+                (toDate != null ? " to " + toDate.format(DateTimeFormatter.ofLocalizedDate(java.time.format.FormatStyle.SHORT)) : "") +
+                (fromTime != null ? " from " + fromTime.format(DateTimeFormatter.ofLocalizedTime(java.time.format.FormatStyle.SHORT)) : "") +
+                (toTime != null ? " to " + toTime.format(DateTimeFormatter.ofLocalizedTime(java.time.format.FormatStyle.SHORT)) : "");
     }
 
 }
