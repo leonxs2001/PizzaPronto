@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutionException;
 
 @AllArgsConstructor
 public class OrderWebsocketController implements IOrderWebsocketController{
-    private static String API_URL = "ws://localhost:8080";
+    private static final String API_URL = "ws://localhost:8080";
     private final IOrderWebsocketGUIController orderWebsocketGUIController;
     private final IAuthenticationRESTController authenticationRESTController;
 
@@ -76,7 +76,6 @@ public class OrderWebsocketController implements IOrderWebsocketController{
 
         @Override
         public void handleFrame(StompHeaders headers, Object payload) {
-            System.out.println(payload);
             MenuVO menu = (MenuVO) payload;
             updateMenu(menu);
         }

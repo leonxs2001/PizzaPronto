@@ -702,6 +702,7 @@ public class OrderGUIController implements IOrderWebsocketGUIController {
 
 	@Override
 	public void updateMenu(MenuVO menu) {
+		System.out.print(menu);
 		this.orderPanel.showMenuNotification(menu);
 	}
 
