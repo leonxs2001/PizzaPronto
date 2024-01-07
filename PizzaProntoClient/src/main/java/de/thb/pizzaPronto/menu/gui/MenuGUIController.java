@@ -23,13 +23,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.thb.pizzaPronto.generalGui.MainView;
 import de.thb.pizzaPronto.menu.rest.*;
-import org.json.JSONException;
 
-public class MenuController {
+public class MenuGUIController {
 
     private MainView view;
 
-    public MenuController(MainView view) {
+    public MenuGUIController(MainView view) {
 
         setView(view);
 

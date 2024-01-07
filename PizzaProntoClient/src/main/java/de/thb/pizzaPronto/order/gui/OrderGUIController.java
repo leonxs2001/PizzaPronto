@@ -702,7 +702,7 @@ public class OrderGUIController implements IOrderWebsocketGUIController {
 
 	@Override
 	public void updateMenu(MenuVO menu) {
-		//TODO ADD notification
+		this.orderPanel.showMenuNotification(menu);
 	}
 
 }

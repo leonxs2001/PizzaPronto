@@ -10,10 +10,10 @@ import de.thb.pizzaPronto.customer.gui.CustomerGUIController;
 import de.thb.pizzaPronto.customer.rest.CustomerRESTController;
 import de.thb.pizzaPronto.generalGui.MainGUIController;
 import de.thb.pizzaPronto.generalGui.MainView;
-import de.thb.pizzaPronto.menu.gui.MenuController;
+import de.thb.pizzaPronto.menu.gui.MenuGUIController;
 import de.thb.pizzaPronto.order.gui.OrderGUIController;
 import de.thb.pizzaPronto.order.websocket.OrderWebsocketController;
-import de.thb.pizzaPronto.staff.gui.StaffController;
+import de.thb.pizzaPronto.staff.gui.StaffGUIController;
 
 public class GUI_Main {
 
@@ -49,10 +49,10 @@ public class GUI_Main {
 
 				MainGUIController mainGUIController = new MainGUIController(authenticationRESTController, customerRESTController, view);
 				AuthenticationGUIController authenticationGUIController = new AuthenticationGUIController(mainGUIController, view.getMainPanel().getLoginPanel());
-				StaffController staffController = new StaffController(view);
+				StaffGUIController staffController = new StaffGUIController(view);
 				CustomerGUIController customerGUIController = new CustomerGUIController(mainGUIController, view.getMainPanel().getLayoutPanel().getCustomerPanel());
 				OrderGUIController orderController = new OrderGUIController(view);
-				MenuController menuController = new MenuController(view);
+				MenuGUIController menuController = new MenuGUIController(view);
 
 				OrderWebsocketController orderWebsocketController = new OrderWebsocketController(orderController, authenticationRESTController);
 				mainGUIController.attach(orderWebsocketController);

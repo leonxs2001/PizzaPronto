@@ -16,12 +16,6 @@ import java.util.List;
 public class DiscountViewModel {
     private final IDiscountService discountService;
 
-    @PostMapping("/test")
-    public String test(){//TODO delete (is only for test cases
-        discountService.addDiscount(new DiscountVO(12321, "Test", "Test", LocalDate.now(), LocalDate.now(), LocalTime.now(), LocalTime.now()));
-        return "jaaa";
-    }
-
     @GetMapping
     public List<DiscountVO> getAllDiscounts(){
         return discountService.getAllDiscounts();

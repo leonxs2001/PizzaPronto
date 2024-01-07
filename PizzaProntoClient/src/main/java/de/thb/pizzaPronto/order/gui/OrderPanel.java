@@ -1,6 +1,7 @@
 package de.thb.pizzaPronto.order.gui;
 
 import de.thb.pizzaPronto.generalGui.DefaultButton;
+import de.thb.pizzaPronto.menu.rest.MenuVO;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -948,6 +949,8 @@ public class OrderPanel extends JPanel{
 		this.exportOrdersButton = exportOrdersButton;
 	}
 	
-	
+	public void showMenuNotification(MenuVO menu){
+		// TODO Hier sache machen!!!
+	}
 
 }

@@ -28,11 +28,11 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 
-public class StaffController {
+public class StaffGUIController {
 	
 	private MainView view;
 
-	public StaffController(MainView view) {
+	public StaffGUIController(MainView view) {
 		
 		setView(view);
 		
