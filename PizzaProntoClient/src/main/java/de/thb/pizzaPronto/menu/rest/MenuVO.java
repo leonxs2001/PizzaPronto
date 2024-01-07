@@ -1,21 +1,42 @@
 package de.thb.pizzaPronto.menu.rest;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Getter
+@Setter
 public class MenuVO {
-	private List<DishVO> dishes;
-	
+	private static int nextId = 1;
+
+	private int id;
+	private List<Object> dishes;
+
+	public MenuVO(int id, ArrayList<DishVO> dishes) {
+		this.id = id;
+		List<Object> temp_dishes = new ArrayList<Object>();
+		for (DishVO dish : dishes){
+			Object o = (Object) dish;
+			temp_dishes.add(o);
+		}
+		this.dishes = temp_dishes;
+
+	}
 	public MenuVO(ArrayList<DishVO> dishes) {
-		this.dishes = dishes;
+		this(nextId++, dishes);
 	}
 
 	/**
 	 * Defaultkonstruktor
 	 * 
 	 */
+	public MenuVO(int id) {
+		this.id = id;
+	}
 	public MenuVO() {
+		this(nextId++);
 		initMenu();
 	}
 
@@ -23,8 +44,13 @@ public class MenuVO {
 	 * Method to initialize the menu and create all objects of dishes.
 	 * 
 	 */
+
+	public void resetId(){
+		setId(nextId++);
+	}
+
 	private void initMenu() {
-		this.dishes = new ArrayList<DishVO>();
+		this.dishes = new ArrayList<Object>();
 		ArrayList<IngredientComponent> zutatenMargherita = new ArrayList<IngredientComponent>();
 		ArrayList<IngredientComponent> zutatenBolognese1 = new ArrayList<IngredientComponent>();
 		ArrayList<IngredientComponent> zutatenBolognese2 = new ArrayList<IngredientComponent>();
@@ -128,65 +154,34 @@ public class MenuVO {
 	 * 
 	 */
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		DecimalFormat dFormat = new DecimalFormat(".00"); //Format the price ...
-
-		sb.append("MENU PIZZA PRONTO\n\n");
-		// Pizzas
-		sb.append("Prima special pizzas: \n   1 normal (Diameter approx. 26 cm) and \n   2 grande (Diameter approx. 32 cm)\n");
-		int i = 0;
-		do {
-			sb.append(dishes.get(i).getNumber() + "\t");
-			sb.append(dishes.get(i).getName() + "\t");
-			sb.append(dishes.get(i).ingredientsToString());
-			sb.append("\n\tPrice:\t\t\t"
-					+ dFormat.format(dishes.get(i).getPrice()) + " Euro");
-			if(dishes.get(i).getNumber() == dishes.get(i+1).getNumber()){
-				sb.append("\n\tPrice:\t\t\t"
-						+ dFormat.format(dishes.get(i+1).getPrice()) + " Euro");
-				sb.append("\n");
-				i+=2;
+		StringBuilder result = new StringBuilder();
+		result.append("Menu:");
+		if (dishes != null && !dishes.isEmpty()) {
+			for (Object o : dishes) {
+				try {
+					PizzaVO dish = (PizzaVO) o;
+					result.append("\t-").append(dish.toString()).append(" \n");
+				}
+				catch(ClassCastException e1) {
+					try {
+						PastaVO dish = (PastaVO) o;
+						result.append("\t-").append(dish.toString()).append(" \n");
+					}
+					catch(ClassCastException e2) {
+						try {
+							DessertVO dish = (DessertVO) o;
+							result.append("\t-").append(dish.toString()).append(" \n");
+						}
+						catch(ClassCastException e3) {
+							DishVO dish = (DishVO) o;
+							result.append("\t-").append(dish.toString()).append(" \n");
+						}
+					}
+				}
 			}
-			else i++;
-		} while (i < dishes.size() && dishes.get(i) instanceof PizzaVO );
-		
-		//Pasta 
-		
-		sb.append("\nPrima special pastas: \n4  Spaghetti\n5  Tortellini\n6  Gnocchi\n");
-		do {
-			sb.append(" " + dishes.get(i).getNumber() + "\t");
-			sb.append(dishes.get(i).getName() + "\t");
-
-			sb.append(dishes.get(i).ingredientsToString());
-
-			sb.append("\n\tPrice:\t\t\t"
-					+ dFormat.format(dishes.get(i).getPrice()) + " Euro");
-			if(dishes.get(i).getNumber() == dishes.get(i+1).getNumber() && dishes.get(i).getNumber() == dishes.get(i+2).getNumber()){
-				i+=3;
-			} else {
-			if(dishes.get(i).getNumber() == dishes.get(i+1).getNumber()){
-				i+=2;
-			}
-			else
-				i++;
-			}
-			sb.append("\n");
-		} while (i < dishes.size() && dishes.get(i) instanceof PastaVO);
-		
-		sb.append("\nPrima desserts\n");
-		do {
-			sb.append(dishes.get(i).getNumber() + "\t");
-			sb.append(dishes.get(i).getName() + "\t");
-
-			sb.append(dishes.get(i).ingredientsToString());
-
-			sb.append("\n\tPrice:\t\t\t"
-					+ dFormat.format(dishes.get(i).getPrice()) + " Euro");
-			sb.append("\n");
-			i++;
-		} while (i < dishes.size() && dishes.get(i) instanceof DessertVO);
-
-		return sb.toString();
+			result.setLength(result.length() - 2);
+		}
+		return result.toString();
 	}
 
 	
@@ -195,7 +190,7 @@ public class MenuVO {
 	// / Getter und Setter
 	// /
 	public DishVO getDish(int index) {
-			return dishes.get(index);
+			return (DishVO) dishes.get(index);
 	}
 
 	public int getNumberOfDishes() {

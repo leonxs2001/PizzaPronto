@@ -5,11 +5,11 @@ import de.thb.pizzaPronto.menu.data.DiscountVO;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class DiscountObservable {
+public abstract class AbstractDiscountObservable {
 
     List<IDiscountObserver> observers;
 
-    public DiscountObservable(){
+    public AbstractDiscountObservable(){
         observers = new ArrayList<>();
     }
 

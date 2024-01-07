@@ -1,17 +1,23 @@
 package de.thb.pizzaPronto.menu.rest;
+import lombok.Getter;
+
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 
 
-public abstract class DishVO implements  Comparable<DishVO>, Cloneable, Serializable{
+@Getter
+public class DishVO implements  Comparable<DishVO>, Cloneable, Serializable{
 
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	// /
+	// / Setter und Getter
+	// /
 	protected int number;
 	protected String name;
 	protected float price;
@@ -94,7 +100,7 @@ public abstract class DishVO implements  Comparable<DishVO>, Cloneable, Serializ
 			
 			for (IngredientComponent currentIngredient : getIngredients()) { // Fuer jede
 				// Zutat ...
-				sb.append(currentIngredient.toString() + ", "); // aktuelle Zutat und Komma an
+				sb.append(currentIngredient.toString()).append(", "); // aktuelle Zutat und Komma an
 				// Rueckgabestring anhaengen ...
 			}
 			sb = new StringBuilder(sb.substring(0, sb.length() - 2)); // Komma am Ende entfernen ...
@@ -140,37 +146,18 @@ public abstract class DishVO implements  Comparable<DishVO>, Cloneable, Serializ
 		return true;
 	}
 
-	// /
-	// / Setter und Getter
-	// /
-	public int getNumber() {
-		return number;
-	}
-
 	public void setNumber(int number) {
 		this.number = number;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public ArrayList<IngredientComponent>  getIngredients() {
-		return ingredients;
-	}
-
 	public void setIngredients(ArrayList<IngredientComponent>  zutaten) {
 		this.ingredients = zutaten;
 	}
-	
 
-	public float getPrice() {
-		return price;
-	}
 
 	public void setPrice(float price) {
 		this.price = (price > 0f) ? price : 0f;
@@ -179,23 +166,19 @@ public abstract class DishVO implements  Comparable<DishVO>, Cloneable, Serializ
 	public void setTimeToMake(float ttm) {
 		this.timeToMake = ttm;
 	}
-	
-	public float getTimeToMake() {
-		return this.timeToMake;
-	}
 
 	/**
 	 * Abstract method of returning the name of the dish as in menu. Must be overridden by the derived classes.
 	 * 
 	 * @return - name of the dish
 	 */
-	public abstract String getNameOfDish();
+	public String getNameOfDish(){return this.name;}
 
 	/**
 	  * Abstract method of returning the number of the dish as in menu. Must be overridden by the derived classes.
 	 * 
 	 * @return - number of the dish
 	 */
-	public abstract int getNumberOfDish();
+	public int getNumberOfDish(){return this.number;}
 
 } 

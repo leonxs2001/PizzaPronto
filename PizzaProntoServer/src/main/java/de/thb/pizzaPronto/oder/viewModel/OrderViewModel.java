@@ -1,23 +1,25 @@
 package de.thb.pizzaPronto.oder.viewModel;
 
 import de.thb.pizzaPronto.menu.data.DiscountVO;
-import de.thb.pizzaPronto.menu.model.DiscountObservable;
-import lombok.AllArgsConstructor;
+import de.thb.pizzaPronto.menu.data.DishVO;
+import de.thb.pizzaPronto.menu.data.MenuVO;
+import de.thb.pizzaPronto.menu.model.AbstractDiscountObservable;
+import de.thb.pizzaPronto.menu.model.AbstractMenuObservable;
+import de.thb.pizzaPronto.menu.model.IDiscountObserver;
+import de.thb.pizzaPronto.menu.model.IMenuObserver;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 @Controller
 @RestController
-public class OrderViewModel implements IOrderViewModel{
+public class OrderViewModel implements IDiscountObserver, IMenuObserver {
     private final SimpMessagingTemplate messagingTemplate;
 
-    public OrderViewModel(SimpMessagingTemplate messagingTemplate, DiscountObservable discountObservable){
+    public OrderViewModel(SimpMessagingTemplate messagingTemplate, AbstractDiscountObservable discountObservable, AbstractMenuObservable menuObservable){
         this.messagingTemplate = messagingTemplate;
         discountObservable.attachDiscountObserver(this);
+        menuObservable.attachMenuObserver(this);
     }
 
     @Override
@@ -25,4 +27,10 @@ public class OrderViewModel implements IOrderViewModel{
         //new DiscountVO("Test", "Test", LocalDate.now(), LocalDate.now(), LocalTime.now(), LocalTime.now())
         messagingTemplate.convertAndSend("/topic/discount", discount);
     }
+
+    @Override
+    public void updateMenu(MenuVO menu) {
+        messagingTemplate.convertAndSend("/topic/menu", menu);
+    }
+
 }

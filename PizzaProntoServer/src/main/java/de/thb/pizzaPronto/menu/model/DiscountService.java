@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class DiscountService extends DiscountObservable implements IDiscountService {
+public class DiscountService extends AbstractDiscountObservable implements IDiscountService {
     private final IDiscountDAO discountDAO;
 
 

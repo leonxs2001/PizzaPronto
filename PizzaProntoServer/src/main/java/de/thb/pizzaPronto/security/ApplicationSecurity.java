@@ -29,7 +29,7 @@ public class ApplicationSecurity {
                         .requestMatchers("/authenticate").permitAll()
                         .requestMatchers("/test").permitAll()
                         .requestMatchers("/customer/**").authenticated()//TODO change
-                        .requestMatchers("/menu/**").authenticated()//TODO change
+                        .requestMatchers("/menu/**").permitAll()//TODO change
                         .requestMatchers("/ws/**").authenticated()//TODO change
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())

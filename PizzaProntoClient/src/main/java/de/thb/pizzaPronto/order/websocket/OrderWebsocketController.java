@@ -76,6 +76,7 @@ public class OrderWebsocketController implements IOrderWebsocketController{
 
         @Override
         public void handleFrame(StompHeaders headers, Object payload) {
+            System.out.println(payload);
             MenuVO menu = (MenuVO) payload;
             updateMenu(menu);
         }
