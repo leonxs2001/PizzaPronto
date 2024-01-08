@@ -37,17 +37,13 @@ public class DishDAO implements IDishDAO {
 
     @Override
     public void saveAllDishes(List<DishVO> dishes) {
-        for (DishVO dish : dishes){
-            this.saveDish(dish);
-        }
+        this.dishes.addAll(dishes);
     }
 
     @Override
-    public void deleteAllDishes(List<DishVO> dishes) throws IdNotFoundException {
-        for (DishVO dish : dishes){
-            this.deleteDishByNumber(dish.getNumber());
+    public void deleteAllDishes(List<DishVO> dishes) {
+        this.dishes.removeAll(dishes);
 
-        }
     }
 
     @Override
@@ -57,7 +53,9 @@ public class DishDAO implements IDishDAO {
 
     @Override
     public void deleteDishByNumber(int dishNumber) throws IdNotFoundException {
-        if(!dishes.remove(new DishVO(dishNumber))){
+        int size_before = dishes.size();
+        dishes.removeIf(dish -> dish.getNumber() == dishNumber);
+        if (size_before >= dishes.size()){
             throw new IdNotFoundException("There is no dish with the given id");
         }
 

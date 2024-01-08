@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,7 +22,7 @@ import java.util.Objects;
         @JsonSubTypes.Type(value = PastaVO.class),
         @JsonSubTypes.Type(value = PastaVO.class),
 })
-public class DishVO {
+public abstract class DishVO {
     protected static int nextNumber = 1;
 
     protected int number;
@@ -31,8 +32,9 @@ public class DishVO {
     protected ArrayList<IngredientComponent> ingredients;
 
     public DishVO(String name, float price, float timeToMake, List<IngredientComponent> ingredients) {
-        number = nextNumber++;
-        this.setName(name); this.setPrice(price);
+        this.setNumber(nextNumber++);
+        this.setName(name);
+        this.setPrice(price);
         this.setTimeToMake(timeToMake);
         this.setIngredients((ArrayList<IngredientComponent>) ingredients);
     }
@@ -46,11 +48,12 @@ public class DishVO {
     }
 
     public String toString() {
+        DecimalFormat dFormat = new DecimalFormat(".00");
         StringBuilder result = new StringBuilder();
         result.append(number != 0 ? number + " - " : "");
         result.append(name != null ? name : "");
-        result.append(price != 0.0 ? " for a price of " + price : "");
-        result.append(timeToMake != 0.0 ? " takes " + timeToMake + " minutes to make" : "");
+        result.append(price != 0.0 ? " for a price of " + dFormat.format(price) : "");
+        result.append(timeToMake != 0.0 ? " takes " + dFormat.format(timeToMake) + " minutes to make" : "");
 
         if (ingredients != null && !ingredients.isEmpty()) {
             result.append(" with ingredients: ");
@@ -60,6 +63,13 @@ public class DishVO {
             result.setLength(result.length() - 2);
         }
         return result.toString();
+    }
+
+    public String toStringForMenu(){
+        DecimalFormat dFormat = new DecimalFormat(".00");
+        return (number != 0 ? number + " - " : "") +
+                (name != null ? name : "") +
+                (price != 0.0 ? "\t€ " + dFormat.format(price) : "");
     }
 
     @Override

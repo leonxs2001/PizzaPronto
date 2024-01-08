@@ -35,7 +35,53 @@ public class MenuViewModel {
     @GetMapping("/test")
     public void test(){//TODO delete (is only for test cases
         System.out.print("Line");
-        addDish(new PizzaVO("Pasta spezial", 12f, 25f, new ArrayList<>(), 1));
-        //addDish(new PastaVO("Pizza spezial", 12f, 25f, new ArrayList<>(), 1));
+        ArrayList<IngredientComponent> zustatenPizza = new ArrayList<>();
+        ArrayList<IngredientComponent> zutatenPasta = new ArrayList<>();
+
+        IngredientLeaf il;
+        IngredientComposite ic;
+
+        ic = new IngredientComposite("Teig");
+        il = new IngredientLeaf("Mehl");
+        ic.add(il);
+        il = new IngredientLeaf("Salz",0.01f);
+        ic.add(il);
+        il = new IngredientLeaf("Hefe");
+        ic.add(il);
+        il = new IngredientLeaf("Wasser");
+        ic.add(il);
+        zustatenPizza.add(ic);
+
+        ic = new IngredientComposite("Belag Pizza Spezial");
+        il = new IngredientLeaf("Pizzasoße");
+        ic.add(il);
+        il = new IngredientLeaf("Salami");
+        ic.add(il);
+        il = new IngredientLeaf("Peparoni");
+        ic.add(il);
+        il = new IngredientLeaf("Champignons");
+        ic.add(il);
+        zustatenPizza.add(ic);
+
+        ic = new IngredientComposite("Teig");
+        il = new IngredientLeaf("Mehl");
+        ic.add(il);
+        il = new IngredientLeaf("Salz", 0.01f);
+        ic.add(il);
+        il = new IngredientLeaf("Eier");
+        ic.add(il);
+        zutatenPasta.add(ic);
+        ic = new IngredientComposite("Soße Pasta Spezial");
+        il = new IngredientLeaf("Sahne");
+        ic.add(il);
+        il = new IngredientLeaf("Spinat", 0.1f);
+        ic.add(il);
+        il = new IngredientLeaf("Käse");
+        ic.add(il);
+        zutatenPasta.add(ic);
+
+
+        addDish(new PizzaVO("Pizza spezial", 12f, 25f, zustatenPizza, 1));
+        addDish(new PastaVO("Pasta spezial", 12f, 25f, zutatenPasta, 1));
     }
 }

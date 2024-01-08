@@ -1,5 +1,7 @@
 package de.thb.pizzaPronto.menu.data;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")
+@JsonTypeName("ingredientComposite")
 public class IngredientComposite extends IngredientComponent {
 
     private List<IngredientComponent> parts;

@@ -16,7 +16,7 @@ import java.util.Objects;
 		@JsonSubTypes.Type(value = PastaVO.class),
 		@JsonSubTypes.Type(value = PastaVO.class),
 })
-public class DishVO implements  Comparable<DishVO>, Cloneable, Serializable{
+public abstract class DishVO implements  Comparable<DishVO>, Cloneable, Serializable{
 
 
 	/**
@@ -97,6 +97,13 @@ public class DishVO implements  Comparable<DishVO>, Cloneable, Serializable{
 		sb.append("\n");
 
 		return sb.toString();
+	}
+
+	public String toStringForMenu(){
+		DecimalFormat dFormat = new DecimalFormat(".00");
+		return (number != 0 ? number + " - " : "") +
+				(name != null ? name : "") +
+				(price != 0.0 ? "\t€ " + dFormat.format(price) : "");
 	}
 
 	

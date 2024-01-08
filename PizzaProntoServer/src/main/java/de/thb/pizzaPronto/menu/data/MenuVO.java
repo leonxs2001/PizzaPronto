@@ -28,13 +28,14 @@ public class MenuVO {
 
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append("Menu:");
+        result.append("PizzaPronto Spezial Menu:\n");
         if (dishes != null && !dishes.isEmpty()) {
             for (DishVO dish : dishes) {
-                result.append("\t-").append(dish.toString()).append(" \n");
+                result.append(dish.toStringForMenu()).append(" \n\n");
             }
             result.setLength(result.length() - 2);
         }
+        result.append("\n");
         return result.toString();
     }
 

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 @AllArgsConstructor
@@ -27,5 +28,23 @@ public class PastaVO extends DishVO{
         String result = super.toString();
 
         return result + (typeOfPasta != 0 ? " and is Pasta, Type: " + typeOfPasta : " and is Pasta");
+    }
+    @Override
+    public String toStringForMenu(){
+        DecimalFormat dFormat = new DecimalFormat(".00");
+        StringBuilder result = new StringBuilder();
+        result.append(number != 0 ? number + " - " : "");
+        result.append(name != null ? name : "");
+        result.append(typeOfPasta != 0 ? " (Type: " + typeOfPasta + ") " : "");
+        result.append(price != 0.0 ? "\t€ " + dFormat.format(price) : "");
+
+        if (ingredients != null && !ingredients.isEmpty()) {
+            result.append("\nIngredients: ");
+            for (IngredientComponent ingredient : ingredients) {
+                result.append(ingredient.toString()).append(", ");
+            }
+            result.setLength(result.length() - 2);
+        }
+        return result.toString();
     }
 }

@@ -3,6 +3,7 @@ package de.thb.pizzaPronto.menu.rest;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -50,6 +51,24 @@ public class PizzaVO extends DishVO{
 	public PizzaVO(int number, String name, float price, float time, int size) {
 		super(number, name, null, price,time);
 		setSize(size);
+	}
+
+	public String toStringForMenu(){
+		DecimalFormat dFormat = new DecimalFormat(".00");
+		StringBuilder result = new StringBuilder();
+		result.append(number != 0 ? number + " - " : "");
+		result.append(name != null ? name : "");
+		result.append(size != 0 ? " (Size: " + size + ") " : "");
+		result.append(price != 0.0 ? "\t€ " + dFormat.format(price) : "");
+
+		if (ingredients != null && !ingredients.isEmpty()) {
+			result.append("\nIngredients: ");
+			for (IngredientComponent ingredient : ingredients) {
+				result.append(ingredient.toString()).append(", ");
+			}
+			result.setLength(result.length() - 2);
+		}
+		return result.toString();
 	}
 
 	/**

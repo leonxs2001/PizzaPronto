@@ -1,8 +1,13 @@
 package de.thb.pizzaPronto.menu.rest;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")
+@JsonTypeName("ingredientComposite")
 public class IngredientComposite extends IngredientComponent {
 	
 	

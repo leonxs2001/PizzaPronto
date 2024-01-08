@@ -1,7 +1,16 @@
 package de.thb.pizzaPronto.menu.rest;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import java.io.Serializable;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@class")
+@JsonSubTypes({
+		@JsonSubTypes.Type(value = IngredientComposite.class),
+		@JsonSubTypes.Type(value = IngredientLeaf.class),
+})
 public abstract class IngredientComponent implements Serializable{
 	/**
 	 * 
