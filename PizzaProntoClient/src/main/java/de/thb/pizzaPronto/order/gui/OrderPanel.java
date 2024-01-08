@@ -23,7 +23,7 @@ import javax.swing.table.TableColumnModel;
 
 @SuppressWarnings("serial")
 public class OrderPanel extends JPanel{
-	
+
 	private JPanel headerPanel;
 	private JPanel newOrderPanel;
 	private JPanel hintPanel;
@@ -84,8 +84,11 @@ public class OrderPanel extends JPanel{
 	private DefaultButton confirmButton;
 	private DefaultButton importOrdersButton;
 	private DefaultButton exportOrdersButton;
+
+	private DefaultButton MenuNotificationButton;
 	
 	private JTextArea serviceTextArea;
+
 
 	public OrderPanel() {
 
@@ -219,13 +222,26 @@ public class OrderPanel extends JPanel{
 		c.gridx = 0;
 		c.gridy = 1;
 		headerPanel.add(headerLabelLarge, c);
-		
+
+
+		MenuNotificationButton = new DefaultButton("Das Menu wurde aktualisiert!");
+		MenuNotificationButton.setFont(new Font("Helvetica", Font.PLAIN, 15));
+		MenuNotificationButton.setForeground(new Color(0xEEEEEE));
+		MenuNotificationButton.setBackground(new Color(0xC35446));
+		MenuNotificationButton.setSize(5,5);
+		MenuNotificationButton.setVisible(false);
+		c.gridx = 1;
+		c.gridy =1;
+		c.insets = new Insets(0,500,10,0);
+		c.anchor = GridBagConstraints.LAST_LINE_END;
+		headerPanel.add(MenuNotificationButton, c);
+
 		importOrdersButton = new DefaultButton("Import Orders");
 		importOrdersButton.setForeground(new Color(0xEEEEEE));
 		importOrdersButton.setBackground(new Color(0x999999));
 		importOrdersButton.setIcon(new ImageIcon("gui/de/thb/dim/pizzaProntoGUI/images/import_24px.png"));
 		importOrdersButton.setIconTextGap(8);
-		c.gridx = 1;
+		c.gridx = 2;
 		c.gridy = 1;
 		c.insets = new Insets(0,0,10,0);
 		c.anchor = GridBagConstraints.LAST_LINE_END;
@@ -236,7 +252,7 @@ public class OrderPanel extends JPanel{
 		exportOrdersButton.setBackground(new Color(0x999999));
 		exportOrdersButton.setIcon(new ImageIcon("gui/de/thb/dim/pizzaProntoGUI/images/export_24px.png"));
 		exportOrdersButton.setIconTextGap(8);
-		c.gridx = 2;
+		c.gridx = 3;
 		c.gridy = 1;
 		c.weightx = 0;
 		c.insets = new Insets(0,10,10,0);
@@ -739,6 +755,14 @@ public class OrderPanel extends JPanel{
 		servicePanel.add(confirmButton, c2);		
 	}
 
+	public void showMenuNotification(MenuVO menu){
+		// TODO Hier sache machen!!!
+		MenuNotificationButton.setVisible(true);
+	}
+
+	public void hideMenuNotificationButton(){
+
+	}
 
 	public JComboBox getCustomerComboBox() {
 		return customerComboBox;
@@ -945,12 +969,16 @@ public class OrderPanel extends JPanel{
 		return exportOrdersButton;
 	}
 
+	public DefaultButton getMenuNotificationButton() {
+		return MenuNotificationButton;
+	}
+
+	public void setMenuNotificationButton(){
+		this.MenuNotificationButton = MenuNotificationButton;
+	}
+
 	public void setExportOrdersButton(DefaultButton exportOrdersButton) {
 		this.exportOrdersButton = exportOrdersButton;
-	}
-	
-	public void showMenuNotification(MenuVO menu){
-		// TODO Hier sache machen!!!
 	}
 
 }

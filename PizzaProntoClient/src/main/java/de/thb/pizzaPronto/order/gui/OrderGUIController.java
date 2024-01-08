@@ -24,6 +24,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -84,6 +86,7 @@ public class OrderGUIController implements IOrderWebsocketGUIController {
 //		orderMenuTableModel = (DefaultTableModel) orderMenuTable.getModel();
 		shoppingBasketTableModel = (DefaultTableModel) shoppingBasketTable.getModel();
 		orderTableModel = (DefaultTableModel) orderTable.getModel();
+
 		
 		ListSelectionModel tableSelection = orderTable.getSelectionModel();
 		
@@ -94,6 +97,7 @@ public class OrderGUIController implements IOrderWebsocketGUIController {
 		JButton confirmButton = orderPanel.getConfirmButton();
 		JButton importButton = orderPanel.getImportOrdersButton();
 		JButton exportButton = orderPanel.getExportOrdersButton();
+		JButton MenuNotificationButton = orderPanel.getMenuNotificationButton();
 		
 		JComboBox sortComboBox = orderPanel.getSortComboBox();
 		
@@ -500,7 +504,11 @@ public class OrderGUIController implements IOrderWebsocketGUIController {
 			}
 			
 		});
-		
+
+		MenuNotificationButton.addActionListener(e -> {
+			MenuNotificationButton.setVisible(false);
+        });
+
 		importButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -705,5 +713,4 @@ public class OrderGUIController implements IOrderWebsocketGUIController {
 		System.out.print(menu);
 		this.orderPanel.showMenuNotification(menu);
 	}
-
 }
