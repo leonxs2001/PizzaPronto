@@ -21,11 +21,6 @@ public abstract class AbstractMenuObservable {
     }
 
     public void notifyMenuObserversMenu(MenuVO menu) {
-        ArrayList<DishVO> dishes = new ArrayList<>();
-        for(DishVO dish : menu.getDishes()){
-            DishVO new_dish = new DishVO(dish.getNumber(), dish.getName(), dish.getPrice(), dish.getTimeToMake(), dish.getIngredients());
-            dishes.add(new_dish);
-        }
-        observers.forEach(observer -> observer.updateMenu(new MenuVO(dishes)));
+        observers.forEach(observer -> observer.updateMenu(menu));
     }
 }

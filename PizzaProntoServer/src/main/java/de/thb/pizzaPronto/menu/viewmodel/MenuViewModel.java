@@ -36,6 +36,6 @@ public class MenuViewModel {
     public void test(){//TODO delete (is only for test cases
         System.out.print("Line");
         addDish(new PizzaVO("Pasta spezial", 12f, 25f, new ArrayList<>(), 1));
-        addDish(new PastaVO("Pizza spezial", 12f, 25f, new ArrayList<>(), 1));
+        //addDish(new PastaVO("Pizza spezial", 12f, 25f, new ArrayList<>(), 1));
     }
 }

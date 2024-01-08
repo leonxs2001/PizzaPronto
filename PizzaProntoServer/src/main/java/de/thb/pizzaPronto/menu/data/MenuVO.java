@@ -1,5 +1,7 @@
 package de.thb.pizzaPronto.menu.data;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +14,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")
+@JsonTypeName("menu")
 public class MenuVO {
     private static int nextId = 1;
 
@@ -20,12 +24,6 @@ public class MenuVO {
 
     public MenuVO(ArrayList<DishVO> dishes) {
         this(nextId++, dishes);
-    }
-    public MenuVO(int id){
-        setId(id);
-    }
-    public void resetId(){
-        setId(nextId++);
     }
 
     public String toString() {

@@ -1,5 +1,8 @@
 package de.thb.pizzaPronto.menu.rest;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import java.util.ArrayList;
 
 /**
@@ -10,6 +13,8 @@ import java.util.ArrayList;
  * @author Gabriele Schmidt
  * @version 4.0 16.03.2020
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")
+@JsonTypeName("pizza")
 public class PizzaVO extends DishVO{
 	/**
 	 * 

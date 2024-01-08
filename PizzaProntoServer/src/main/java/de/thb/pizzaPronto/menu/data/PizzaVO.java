@@ -1,5 +1,7 @@
 package de.thb.pizzaPronto.menu.data;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +13,8 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")
+@JsonTypeName("pizza")
 public class PizzaVO extends DishVO{
     private int size;
 

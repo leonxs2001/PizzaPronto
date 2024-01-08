@@ -24,7 +24,6 @@ public class OrderViewModel implements IDiscountObserver, IMenuObserver {
 
     @Override
     public void updateDiscount(DiscountVO discount) {
-        //new DiscountVO("Test", "Test", LocalDate.now(), LocalDate.now(), LocalTime.now(), LocalTime.now())
         messagingTemplate.convertAndSend("/topic/discount", discount);
     }
 

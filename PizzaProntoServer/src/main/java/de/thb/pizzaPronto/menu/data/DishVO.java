@@ -1,17 +1,26 @@
 package de.thb.pizzaPronto.menu.data;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = PizzaVO.class),
+        @JsonSubTypes.Type(value = PastaVO.class),
+        @JsonSubTypes.Type(value = PastaVO.class),
+})
 public class DishVO {
     protected static int nextNumber = 1;
 
@@ -21,9 +30,14 @@ public class DishVO {
     protected float timeToMake;           // time in minutes
     protected ArrayList<IngredientComponent> ingredients;
 
-    public DishVO(String name, float price, float timeToMake, ArrayList<IngredientComponent> ingredients) {
-        this(nextNumber++, name, price, timeToMake, ingredients);
+    public DishVO(String name, float price, float timeToMake, List<IngredientComponent> ingredients) {
+        number = nextNumber++;
+        this.setName(name); this.setPrice(price);
+        this.setTimeToMake(timeToMake);
+        this.setIngredients((ArrayList<IngredientComponent>) ingredients);
     }
+
+
     public DishVO(int number){
         setNumber(number);
     }

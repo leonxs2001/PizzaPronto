@@ -1,4 +1,6 @@
 package de.thb.pizzaPronto.menu.rest;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -8,6 +10,12 @@ import java.util.Objects;
 
 
 @Getter
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@class")
+@JsonSubTypes({
+		@JsonSubTypes.Type(value = PizzaVO.class),
+		@JsonSubTypes.Type(value = PastaVO.class),
+		@JsonSubTypes.Type(value = PastaVO.class),
+})
 public class DishVO implements  Comparable<DishVO>, Cloneable, Serializable{
 
 
