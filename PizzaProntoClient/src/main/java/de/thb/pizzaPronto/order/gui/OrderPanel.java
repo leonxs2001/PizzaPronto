@@ -228,7 +228,6 @@ public class OrderPanel extends JPanel{
 		MenuNotificationButton.setFont(new Font("Helvetica", Font.PLAIN, 15));
 		MenuNotificationButton.setForeground(new Color(0xEEEEEE));
 		MenuNotificationButton.setBackground(new Color(0xC35446));
-		MenuNotificationButton.setSize(5,5);
 		MenuNotificationButton.setVisible(false);
 		c.gridx = 1;
 		c.gridy =1;
