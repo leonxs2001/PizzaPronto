@@ -82,44 +82,44 @@ public class PizzaVO extends DishVO{
 
 	// Standard methods of Java
 
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = super.hashCode();
-			result = prime * result + size;
-			return result;
-		}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + size;
+		return result;
+	}
 
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (!super.equals(obj))
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			PizzaVO other = (PizzaVO) obj;
-			if (size != other.size)
-				return false;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
 			return true;
-		}
-		
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PizzaVO other = (PizzaVO) obj;
+		if (size != other.size)
+			return false;
+		return true;
+	}
 
-		@Override
-		public String getNameOfDish() {
-			StringBuffer sb = new StringBuffer();
-			sb.append("Pizza ");
-			
-			if (size == 1) sb.append(getName() + " - Normal");
-			else sb.append(getName() + " - Grande");
-			
-			return sb.toString();
-		}
 
-		@Override
-		public int getNumberOfDish() {
-			return this.number * 10 + size;
-		}
+	@Override
+	public String getNameOfDish() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("Pizza ");
+
+		if (size == 1) sb.append(getName() + " - Normal");
+		else sb.append(getName() + " - Grande");
+
+		return sb.toString();
+	}
+
+	@Override
+	public int getNumberOfDish() {
+		return this.number * 10 + size;
+	}
 		
 	/**
 	 * @return the size

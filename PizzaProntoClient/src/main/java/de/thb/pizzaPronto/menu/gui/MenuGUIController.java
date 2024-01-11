@@ -9,6 +9,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -21,12 +22,24 @@ import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 
+import de.thb.pizzaPronto.customer.gui.CustomerPanel;
+import de.thb.pizzaPronto.exception.FailedRESTCallException;
+import de.thb.pizzaPronto.exception.NoAuthenticatedUserException;
+import de.thb.pizzaPronto.generalGui.ExceptionPanel;
+import de.thb.pizzaPronto.generalGui.MainGUIController;
 import de.thb.pizzaPronto.generalGui.MainView;
 import de.thb.pizzaPronto.menu.rest.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class MenuGUIController {
 
     private MainView view;
+    private MenuPanel menuPanel;
+    private MainGUIController mainGUIController;
+    private IMenuRESTController menuRESTController;
 
     public MenuGUIController(MainView view) {
 
@@ -36,7 +49,7 @@ public class MenuGUIController {
 
         MenuVO menu = new MenuVO();
 
-        loadMenu(menu);
+        menuPanel.loadMenu(menu);
 
         JButton addButton = menuPanel.getAddButton();
         addButton.addActionListener(new ActionListener() {
@@ -271,6 +284,7 @@ public class MenuGUIController {
             }
         });
 
+
 //		JButton copyButton = menuPanel.getCopyButton();
 //		copyButton.addActionListener(new ActionListener() {
 //
@@ -385,38 +399,178 @@ public class MenuGUIController {
 
     }
 
-    private void loadMenu(MenuVO menu) {
+    public MenuGUIController(MainGUIController mainGUIController, MenuPanel menuPanel) {
 
-        //menuPanel.getTableModel().setRowCount(0);
+        setMainGUIController(mainGUIController);
+        setMenuPanel(menuPanel);
+        setMenuRESTController(mainGUIController.getMenuRESTController());
 
-        int length = menu.getNumberOfDishes();
+        // add dish
+        JButton addButton = menuPanel.getAddButton();
+        addButton.addActionListener(e -> addDish());
 
-        for (int i = 0; i < length; i++) {
+        //delete dish
+        JButton removeButton = menuPanel.getRemoveButton();
+        removeButton.addActionListener(e -> deleteDish());
 
-            DishVO dish = menu.getDish(i);
+        //print details
+        JButton printButton = menuPanel.getPrintButton();
+        printButton.addActionListener(e -> printDish());
 
-            Object[] row = new Object[9];
+        // reload everytime the component is shown
+        menuPanel.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+            }
 
-            row[0] = dish;
-            row[1] = dish.getNumberOfDish();
-            row[2] = dish.getClass().getSimpleName();
-            row[3] = dish.getName();
-//			if(dish instanceof PizzaVO || dish instanceof PastaVO)
-            row[4] = dish.ingredientsToString();
-            if (dish instanceof PizzaVO)
-                row[5] = ((PizzaVO) dish).getSize();
-            if (dish instanceof PastaVO)
-                row[6] = ((PastaVO) dish).getTypeOfPasta();
-            row[7] = dish.getPrice();
-            row[8] = dish.hashCode();
+            @Override
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                reload();
+            }
+        });
+
+        // import
+        JButton importButton = menuPanel.getLoadButton();
+        importButton.addActionListener(e -> import_irgendwas());
+
+        // export
+//        JButton exportButton = menuPanel.getSaveButton();
+//        exportButton.addActionListener(e -> export());
+        JComboBox<String> dishComboBox = menuPanel.getDishComboBox();
+        dishComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String typeOfDish = (String) menuPanel.getDishComboBox().getSelectedItem();
+
+                if (typeOfDish.equals("Pasta")) {
+                    menuPanel.getTypeComboBox().setEnabled(true);
+                    menuPanel.getSizeComboBox().setEnabled(false);
+                    menuPanel.getIngredientTextField().setEnabled(true);
+                    menuPanel.getIngredientsTable().setEnabled(true);
+                    menuPanel.getAddIngredientButton().setEnabled(true);
+                    menuPanel.getRemoveIngredientButton().setEnabled(true);
 
 
-            //menuPanel.getTableModel().addRow(row);
-        }
+                } else if (typeOfDish.equals("Pizza")) {
+                    menuPanel.getSizeComboBox().setEnabled(true);
+                    menuPanel.getTypeComboBox().setEnabled(false);
+                    menuPanel.getIngredientTextField().setEnabled(true);
+                    menuPanel.getIngredientsTable().setEnabled(true);
+                    menuPanel.getAddIngredientButton().setEnabled(true);
+                    menuPanel.getRemoveIngredientButton().setEnabled(true);
+
+
+                } else if (typeOfDish.equals("Dessert")) {
+                    menuPanel.getSizeComboBox().setEnabled(false);
+                    menuPanel.getTypeComboBox().setEnabled(false);
+                    menuPanel.getIngredientTextField().setEnabled(false);
+                    menuPanel.getIngredientsTable().setEnabled(false);
+                    menuPanel.getAddIngredientButton().setEnabled(false);
+                    menuPanel.getRemoveIngredientButton().setEnabled(false);
+
+                }
+            }
+        });
+
+        JButton addIngredientButton = menuPanel.getAddIngredientButton();
+        addIngredientButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                Object[] row = new Object[1];
+
+                row[0] = menuPanel.getIngredientTextField().getText();
+
+                menuPanel.getIngredientTableModel().addRow(row);
+
+                menuPanel.getIngredientTextField().setText(null);
+
+            }
+
+        });
+
+        JButton removeIngredientButton = menuPanel.getRemoveIngredientButton();
+        removeIngredientButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int numRows = menuPanel.getIngredientsTable().getSelectedRows().length;
+                for (int i = 0; i < numRows; i++) {
+
+                    menuPanel.getIngredientTableModel().removeRow(menuPanel.getIngredientsTable().getSelectedRow());
+                }
+
+            }
+
+        });
+
     }
+
+
+
 
     public void setView(MainView view) {
         this.view = view;
     }
 
+    public void addDish() {
+        try{
+            DishVO dish = menuPanel.getDishFromInputs();
+            menuRESTController.addDish(dish);
+            menuPanel.addDishToTable(dish);
+        } catch (NullPointerException | FailedRESTCallException | NoAuthenticatedUserException ex) {
+            new ExceptionPanel(ex);
+        }
+
+    }
+
+    public void deleteDish() {
+        DishVO dish = menuPanel.getSelectedDish();
+        menuPanel.deleteSelectedDishRow();
+        try {
+            menuRESTController.deleteDish(dish);
+        } catch (NoAuthenticatedUserException | FailedRESTCallException ex) {
+            new ExceptionPanel(ex);
+        }
+
+    }
+
+    public void reload() {
+        menuPanel.deleteAllDishsFromTable();
+        try {
+            MenuVO menu = menuRESTController.getMenu();
+            menuPanel.loadMenu(menu);
+        } catch (NoAuthenticatedUserException | FailedRESTCallException ex) {
+            new ExceptionPanel(ex);
+        }
+    }
+
+    public void printDish() {
+        DishVO dish = menuPanel.getSelectedDish();
+        menuPanel.printDish(dish);
+
+    }
+
+    public void importMenu(InputStream fileInputStream) {
+        try {
+            menuRESTController.importFromInputStream(fileInputStream);
+        } catch (FailedRESTCallException | NoAuthenticatedUserException ex) {
+            new ExceptionPanel(ex);
+        }
+    }
+
+    public void import_irgendwas() {
+
+    }
+
+    public void export() {
+
+    }
+
+
 }
+
+
+// GUI menu - jpanel, rest, GUI_MAIN verändern
+

@@ -33,7 +33,7 @@ public class MenuViewModel {
     }
 
     @GetMapping("/test")
-    public void test(){//TODO delete (is only for test cases
+    public void test(){//TODO delete (is only for test cases)
         System.out.print("Line");
         ArrayList<IngredientComponent> zustatenPizza = new ArrayList<>();
         ArrayList<IngredientComponent> zutatenPasta = new ArrayList<>();

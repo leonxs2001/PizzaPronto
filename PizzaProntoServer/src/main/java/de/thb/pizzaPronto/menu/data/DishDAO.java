@@ -55,7 +55,8 @@ public class DishDAO implements IDishDAO {
     public void deleteDishByNumber(int dishNumber) throws IdNotFoundException {
         int size_before = dishes.size();
         dishes.removeIf(dish -> dish.getNumber() == dishNumber);
-        if (size_before >= dishes.size()){
+        //TODO: dish.getNumberOfDish()
+        if (size_before <= dishes.size()){
             throw new IdNotFoundException("There is no dish with the given id");
         }
 

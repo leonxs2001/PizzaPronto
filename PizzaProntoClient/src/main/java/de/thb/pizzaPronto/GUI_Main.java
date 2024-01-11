@@ -11,6 +11,7 @@ import de.thb.pizzaPronto.customer.rest.CustomerRESTController;
 import de.thb.pizzaPronto.generalGui.MainGUIController;
 import de.thb.pizzaPronto.generalGui.MainView;
 import de.thb.pizzaPronto.menu.gui.MenuGUIController;
+import de.thb.pizzaPronto.menu.rest.MenuRESTController;
 import de.thb.pizzaPronto.order.gui.OrderGUIController;
 import de.thb.pizzaPronto.order.websocket.OrderWebsocketController;
 import de.thb.pizzaPronto.staff.gui.StaffGUIController;
@@ -44,15 +45,16 @@ public class GUI_Main {
 
 				AuthenticationRESTController authenticationRESTController = new AuthenticationRESTController();
 				CustomerRESTController customerRESTController = new CustomerRESTController(authenticationRESTController);
+				MenuRESTController menuRESTController = new MenuRESTController(authenticationRESTController);
 				
 				MainView view = new MainView(authenticationRESTController, customerRESTController);
 
-				MainGUIController mainGUIController = new MainGUIController(authenticationRESTController, customerRESTController, view);
+				MainGUIController mainGUIController = new MainGUIController(authenticationRESTController, customerRESTController, menuRESTController, view);
 				AuthenticationGUIController authenticationGUIController = new AuthenticationGUIController(mainGUIController, view.getMainPanel().getLoginPanel());
 				StaffGUIController staffController = new StaffGUIController(view);
 				CustomerGUIController customerGUIController = new CustomerGUIController(mainGUIController, view.getMainPanel().getLayoutPanel().getCustomerPanel());
 				OrderGUIController orderController = new OrderGUIController(view);
-				MenuGUIController menuController = new MenuGUIController(view);
+				MenuGUIController menuController = new MenuGUIController(mainGUIController, view.getMainPanel().getLayoutPanel().getMenuPanel());
 
 				OrderWebsocketController orderWebsocketController = new OrderWebsocketController(orderController, authenticationRESTController);
 				mainGUIController.attach(orderWebsocketController);

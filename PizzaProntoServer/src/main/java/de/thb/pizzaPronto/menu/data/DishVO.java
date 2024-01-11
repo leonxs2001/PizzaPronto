@@ -20,7 +20,7 @@ import java.util.Objects;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = PizzaVO.class),
         @JsonSubTypes.Type(value = PastaVO.class),
-        @JsonSubTypes.Type(value = PastaVO.class),
+        @JsonSubTypes.Type(value = DessertVO.class),
 })
 public abstract class DishVO {
     protected static int nextNumber = 1;

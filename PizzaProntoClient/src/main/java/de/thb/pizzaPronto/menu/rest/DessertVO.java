@@ -30,11 +30,13 @@ public class DessertVO extends DishVO {
 	 * @param price - Preis des Dessert
 	 * 
 	 */
+
+
 	
 	public DessertVO(int number, String name, ArrayList<IngredientComponent> ingredients, float price) {
 		super(number, name, ingredients, price);
 	}
-	
+
 
 	public DessertVO(int number, String name, ArrayList<IngredientComponent> ingredients, float price, float time) {
 		super(number, name, ingredients, price, time);
@@ -57,14 +59,12 @@ public class DessertVO extends DishVO {
 	
 	
 	
-//	public String toString() {
-//		
-//		StringBuffer sb = new StringBuffer(); // R�ckgabewert ...
-//		sb.append("Dessert: " );
-//		sb.append(super.toString());
-//		
-//		return sb.toString();
-//	}
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("Dessert: " );
+		sb.append(super.toString());
+		return sb.toString();
+	}
 
 
 	@Override

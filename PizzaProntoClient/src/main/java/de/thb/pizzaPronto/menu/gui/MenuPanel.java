@@ -1,21 +1,12 @@
 package de.thb.pizzaPronto.menu.gui;
 
 import de.thb.pizzaPronto.generalGui.DefaultButton;
+import de.thb.pizzaPronto.menu.rest.*;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
+import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -271,7 +262,7 @@ public class MenuPanel extends JPanel {
 		c.gridy = 10;
 		c.gridwidth = 3;
 		c.insets = new Insets(0, 10, 10, 10);
-		ingredientTextField.setEnabled(false);
+		ingredientTextField.setEnabled(true);
 		addPanel.add(ingredientTextField, c);
 		
 		buttonPanel = new JPanel(new GridBagLayout());
@@ -289,7 +280,7 @@ public class MenuPanel extends JPanel {
 		c7.gridx = 0;
 		c7.gridy = 0;
 		c7.insets = new Insets(0, 0, 0, 5);
-		addIngredientButton.setEnabled(false);
+		addIngredientButton.setEnabled(true);
 		buttonPanel.add(addIngredientButton, c7);
 		
 		
@@ -298,7 +289,7 @@ public class MenuPanel extends JPanel {
 		GridBagConstraints c8 = new GridBagConstraints();
 		c8.gridx = 1;
 		c8.gridy = 0;
-		removeIngredientButton.setEnabled(false);
+		removeIngredientButton.setEnabled(true);
 		buttonPanel.add(removeIngredientButton, c8);
 	
 		
@@ -701,6 +692,179 @@ public class MenuPanel extends JPanel {
 
 	public void setLoadButton(DefaultButton loadButton) {
 		this.loadButton = loadButton;
+	}
+
+	public DishVO getDishFromInputs(){
+		String type = (String) dishComboBox.getSelectedItem();
+		System.out.println(type);
+		int number = Integer.parseInt(numberTextField.getText());
+		int pizzaSize = (int) sizeComboBox.getSelectedItem();
+		int pastaType = (int) typeComboBox.getSelectedItem();
+		String name = nameTextField.getText();
+		float price = Float.parseFloat(priceTextField.getText());
+		ArrayList<IngredientComponent> ingredients = new ArrayList<IngredientComponent>();
+		for (int i = 0; i < ingredientsTable.getRowCount(); i++) {
+			IngredientComponent ingredient = new IngredientComposite((String) ingredientsTable.getValueAt(i, 0));
+			ingredients.add(ingredient);
+		}
+		DishVO dish = null;
+
+		if (type.equals("Pizza")) {
+			dish = new PizzaVO(number, name, ingredients, price, 10 /*idfk*/, pizzaSize);
+		} else if (type.equals("Pasta")) {
+			dish = new PastaVO(number, name, ingredients, price, 10 /*idfk*/, pastaType);
+		} else if (type.equals("Dessert")){
+			dish = new DessertVO(number, name, ingredients, price, 10 /*idfk*/);
+		} else{
+			throw new IllegalArgumentException("Type of dish not found");
+		}
+
+		return dish;
+	}
+
+	public void addDishToTable(DishVO dish){
+
+		int rowCnt = table.getRowCount();
+
+		boolean isEqual = false;
+
+		if (dish != null) {
+			for (int i = 0; i < rowCnt; i++) {
+				if (dish.equals(table.getValueAt(i, 0)))
+					isEqual = true;
+			}
+
+			if (isEqual){
+				EventQueue.invokeLater(() -> {
+					JFrame frame = new JFrame("Note");
+
+					JPanel innerPanel = new JPanel(new GridBagLayout());
+					innerPanel.setOpaque(true);
+					innerPanel.setBackground(Color.WHITE);
+					innerPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+
+					GridBagConstraints c0 = new GridBagConstraints();
+
+					JLabel label = new JLabel("This Dish already exists.");
+					label.setFont(new Font("Arial", Font.PLAIN, 18));
+					label.setForeground(new Color(0x606060));
+
+					c0.insets = new Insets(20, 20, 20, 20);
+					innerPanel.add(label, c0);
+
+					JPanel outerPanel = new JPanel(new GridBagLayout());
+					outerPanel.setOpaque(true);
+					outerPanel.setBackground(new Color(0xeaeaea));
+
+					GridBagConstraints c1 = new GridBagConstraints();
+					c1.insets = new Insets(20, 20, 20, 20);
+					outerPanel.add(innerPanel, c1);
+
+					frame.add(outerPanel);
+
+					frame.setLocationRelativeTo(null);
+					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					frame.pack();
+					frame.setVisible(true);
+				});
+			} else {
+				Object[] row = new Object[9];
+
+				row[0] = dish;
+				//TODO: dish.getNumberOfDish()
+				row[1] = dish.getNumberOfDish();
+				row[2] = dish.getClass().getSimpleName().substring(0, dish.getClass().getSimpleName().length() - 2);
+				row[3] = dish.getName();
+				row[4] = dish.getIngredients();
+				if (dish instanceof PizzaVO)
+					row[5] = ((PizzaVO) dish).getSize();
+				if (dish instanceof PastaVO)
+					row[6] = ((PastaVO) dish).getTypeOfPasta();
+
+				row[7] = dish.getPrice();
+				row[8] = dish.hashCode();
+
+				getTableModel().addRow(row);
+				getNumberTextField().setText(null);
+				getNameTextField().setText(null);
+				getPriceTextField().setText(null);
+				getIngredientTextField().setText(null);
+				getIngredientsTable().removeAll();
+				getIngredientsTable().repaint();
+				getSizeComboBox().setSelectedIndex(0);
+				getTypeComboBox().setSelectedIndex(0);
+
+				ingredientTableModel.setRowCount(0);
+			}
+		}
+
+	}
+	public DishVO getSelectedDish(){
+		int numberOfDish = (int) table.getValueAt(table.getSelectedRow(), 0);
+		String name = (String) table.getValueAt(table.getSelectedRow(), 2);
+		float price = (float) table.getValueAt(table.getSelectedRow(), 6);
+		ArrayList<IngredientComponent> ingredients = (ArrayList<IngredientComponent>) table.getValueAt(table.getSelectedRow(), 4);
+
+		DishVO dish = null;
+		if (table.getValueAt(table.getSelectedRow(), 1).equals("Pizza")) {
+			int size = (int) table.getValueAt(table.getSelectedRow(), 4);
+			int number = numberOfDish - (size * 10);
+			dish = new PizzaVO(number, name, ingredients, price, 10 /*idfk*/, size);
+		} else if (table.getValueAt(table.getSelectedRow(), 1).equals("Pasta")) {
+			int type = (int) table.getValueAt(table.getSelectedRow(), 5);
+			int number = numberOfDish - (type * 100);
+			dish = new PastaVO(number, name, ingredients, price, 10 /*idfk*/, type);
+		} else if (table.getValueAt(table.getSelectedRow(), 1).equals("Dessert")){
+			int number = numberOfDish;
+			dish = new DessertVO(number, name, ingredients, price, 10 /*idfk*/);
+		} else{
+			throw new IllegalArgumentException("Type of dish not found");
+		}
+
+		return dish;
+	}
+
+	public void deleteSelectedDishRow(){
+		tableModel.removeRow(table.getSelectedRow());
+	}
+
+	public void deleteAllDishsFromTable(){
+		tableModel.setRowCount(0);
+	}
+
+	public void printDish(DishVO dish) {
+		EventQueue.invokeLater(() -> new DishInfoFrame(dish));
+	}
+
+	public void loadMenu(MenuVO menu) {
+
+		//menuPanel.getTableModel().setRowCount(0);
+
+		int length = menu.getNumberOfDishes();
+
+		for (int i = 0; i < length; i++) {
+
+			DishVO dish = menu.getDish(i);
+
+			Object[] row = new Object[9];
+
+			row[0] = dish;
+			//TODO: dish.getNumberOfDish()
+			row[1] = dish.getNumberOfDish();
+			row[2] = dish.getClass().getSimpleName().substring(0, dish.getClass().getSimpleName().length() - 2);
+			row[3] = dish.getName();
+//			if(dish instanceof PizzaVO || dish instanceof PastaVO)
+			row[4] = dish.ingredientsToString();
+			if (dish instanceof PizzaVO)
+				row[5] = ((PizzaVO) dish).getSize();
+			if (dish instanceof PastaVO)
+				row[6] = ((PastaVO) dish).getTypeOfPasta();
+			row[7] = dish.getPrice();
+			row[8] = dish.hashCode();
+
+
+			getTableModel().addRow(row);
+		}
 	}
 
 
