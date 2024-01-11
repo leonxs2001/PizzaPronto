@@ -808,7 +808,7 @@ public class MenuPanel extends JPanel {
 		DishVO dish = null;
 		if (table.getValueAt(table.getSelectedRow(), 1).equals("Pizza")) {
 			int size = (int) table.getValueAt(table.getSelectedRow(), 4);
-			int number = numberOfDish - (size * 10);
+			int number = (numberOfDish - size)/ 10;
 			dish = new PizzaVO(number, name, ingredients, price, 10 /*idfk*/, size);
 		} else if (table.getValueAt(table.getSelectedRow(), 1).equals("Pasta")) {
 			int type = (int) table.getValueAt(table.getSelectedRow(), 5);
