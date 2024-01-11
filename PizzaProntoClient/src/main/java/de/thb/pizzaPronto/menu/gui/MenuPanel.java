@@ -771,7 +771,6 @@ public class MenuPanel extends JPanel {
 				Object[] row = new Object[9];
 
 				row[0] = dish;
-				//TODO: dish.getNumberOfDish()
 				row[1] = dish.getNumberOfDish();
 				row[2] = dish.getClass().getSimpleName().substring(0, dish.getClass().getSimpleName().length() - 2);
 				row[3] = dish.getName();
@@ -803,7 +802,8 @@ public class MenuPanel extends JPanel {
 		int numberOfDish = (int) table.getValueAt(table.getSelectedRow(), 0);
 		String name = (String) table.getValueAt(table.getSelectedRow(), 2);
 		float price = (float) table.getValueAt(table.getSelectedRow(), 6);
-		ArrayList<IngredientComponent> ingredients = (ArrayList<IngredientComponent>) table.getValueAt(table.getSelectedRow(), 4);
+//		System.out.println((String) table.getValueAt(table.getSelectedRow(), 3));
+		ArrayList<IngredientComponent> ingredients = (ArrayList<IngredientComponent>) table.getValueAt(table.getSelectedRow(), 3);
 
 		DishVO dish = null;
 		if (table.getValueAt(table.getSelectedRow(), 1).equals("Pizza")) {
@@ -849,12 +849,11 @@ public class MenuPanel extends JPanel {
 			Object[] row = new Object[9];
 
 			row[0] = dish;
-			//TODO: dish.getNumberOfDish()
 			row[1] = dish.getNumberOfDish();
 			row[2] = dish.getClass().getSimpleName().substring(0, dish.getClass().getSimpleName().length() - 2);
 			row[3] = dish.getName();
 //			if(dish instanceof PizzaVO || dish instanceof PastaVO)
-			row[4] = dish.ingredientsToString();
+			row[4] = dish.getIngredients();
 			if (dish instanceof PizzaVO)
 				row[5] = ((PizzaVO) dish).getSize();
 			if (dish instanceof PastaVO)
