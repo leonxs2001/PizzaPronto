@@ -430,8 +430,8 @@ public class MenuGUIController {
         });
 
         // import
-        JButton importButton = menuPanel.getLoadButton();
-        importButton.addActionListener(e -> import_irgendwas());
+ //       JButton importButton = menuPanel.getLoadButton();
+ //       importButton.addActionListener(e -> import_irgendwas());
 
         // export
 //        JButton exportButton = menuPanel.getSaveButton();
@@ -559,15 +559,6 @@ public class MenuGUIController {
             new ExceptionPanel(ex);
         }
     }
-
-    public void import_irgendwas() {
-
-    }
-
-    public void export() {
-
-    }
-
 
 }
 
