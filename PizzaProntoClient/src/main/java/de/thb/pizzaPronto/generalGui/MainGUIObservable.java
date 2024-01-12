@@ -1,5 +1,7 @@
 package de.thb.pizzaPronto.generalGui;
 
+import de.thb.pizzaPronto.authentication.rest.AuthenticatedUserVO;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,6 @@
 package de.thb.pizzaPronto.generalGui;
+import lombok.Getter;
+
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
+@Getter
 public class HomePanel extends JPanel implements ActionListener{
 	
 	private JPanel headerPanel;	
@@ -198,5 +201,7 @@ public class HomePanel extends JPanel implements ActionListener{
 	public void setMainPanel(JPanel mainPanel) {
 		this.mainPanel = mainPanel;
 	}
+
+
 
 }

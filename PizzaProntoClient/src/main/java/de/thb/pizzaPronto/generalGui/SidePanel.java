@@ -1,4 +1,6 @@
 package de.thb.pizzaPronto.generalGui;
+import lombok.Getter;
+
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -11,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
+@Getter
 public class SidePanel extends JPanel implements ActionListener {
 	
 	private SidePanelButton homeButton;

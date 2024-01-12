@@ -79,6 +79,8 @@ public class LayoutPanel extends JPanel {
 		sidePanel.setMainPanel(mainPanel);
 		homePanel.setMainPanel(mainPanel);
 
+
+
 	}
 	
 

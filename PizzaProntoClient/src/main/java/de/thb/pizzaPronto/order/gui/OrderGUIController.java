@@ -97,7 +97,7 @@ public class OrderGUIController implements IOrderWebsocketGUIController {
 		JButton confirmButton = orderPanel.getConfirmButton();
 		JButton importButton = orderPanel.getImportOrdersButton();
 		JButton exportButton = orderPanel.getExportOrdersButton();
-		JButton MenuNotificationButton = orderPanel.getMenuNotificationButton();
+		JButton menuNotificationButton = orderPanel.getMenuNotificationButton();
 		
 		JComboBox sortComboBox = orderPanel.getSortComboBox();
 		
@@ -505,8 +505,8 @@ public class OrderGUIController implements IOrderWebsocketGUIController {
 			
 		});
 
-		MenuNotificationButton.addActionListener(e -> {
-			MenuNotificationButton.setVisible(false);
+		menuNotificationButton.addActionListener(e -> {
+			orderPanel.hideMenuNotification();
         });
 
 		importButton.addActionListener(new ActionListener() {

@@ -27,10 +27,9 @@ public class ApplicationSecurity {
         http
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/authenticate").permitAll()
-                        .requestMatchers("/test").permitAll()
-                        .requestMatchers("/customer/**").authenticated()//TODO change
-                        .requestMatchers("/menu/**").permitAll()//TODO change
-                        .requestMatchers("/ws/**").authenticated()//TODO change
+                        .requestMatchers("/customer/**").hasRole("ADMIN")
+                        .requestMatchers("/menu/**").hasRole("ADMIN")
+                        .requestMatchers("/ws/**").hasAnyRole("ADMIN", "CUSTOMER")
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

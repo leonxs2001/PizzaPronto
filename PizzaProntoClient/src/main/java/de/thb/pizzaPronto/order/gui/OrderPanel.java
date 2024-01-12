@@ -85,7 +85,7 @@ public class OrderPanel extends JPanel{
 	private DefaultButton importOrdersButton;
 	private DefaultButton exportOrdersButton;
 
-	private DefaultButton MenuNotificationButton;
+	private DefaultButton menuNotificationButton;
 	
 	private JTextArea serviceTextArea;
 
@@ -224,16 +224,16 @@ public class OrderPanel extends JPanel{
 		headerPanel.add(headerLabelLarge, c);
 
 
-		MenuNotificationButton = new DefaultButton("Das Menu wurde aktualisiert!");
-		MenuNotificationButton.setFont(new Font("Helvetica", Font.PLAIN, 15));
-		MenuNotificationButton.setForeground(new Color(0xEEEEEE));
-		MenuNotificationButton.setBackground(new Color(0xC35446));
-		MenuNotificationButton.setVisible(false);
+		menuNotificationButton = new DefaultButton("Das Menu wurde aktualisiert!");
+		menuNotificationButton.setFont(new Font("Helvetica", Font.PLAIN, 15));
+		menuNotificationButton.setForeground(new Color(0xEEEEEE));
+		menuNotificationButton.setBackground(new Color(0xC35446));
+		menuNotificationButton.setVisible(false);
 		c.gridx = 1;
 		c.gridy =1;
 		c.insets = new Insets(0,500,10,0);
 		c.anchor = GridBagConstraints.LAST_LINE_END;
-		headerPanel.add(MenuNotificationButton, c);
+		headerPanel.add(menuNotificationButton, c);
 
 		importOrdersButton = new DefaultButton("Import Orders");
 		importOrdersButton.setForeground(new Color(0xEEEEEE));
@@ -755,12 +755,11 @@ public class OrderPanel extends JPanel{
 	}
 
 	public void showMenuNotification(MenuVO menu){
-		// TODO Hier sache machen!!!
-		MenuNotificationButton.setVisible(true);
+		menuNotificationButton.setVisible(true);
 	}
 
-	public void hideMenuNotificationButton(){
-
+	public void hideMenuNotification(){
+		menuNotificationButton.setVisible(false);
 	}
 
 	public JComboBox getCustomerComboBox() {
@@ -969,11 +968,11 @@ public class OrderPanel extends JPanel{
 	}
 
 	public DefaultButton getMenuNotificationButton() {
-		return MenuNotificationButton;
+		return menuNotificationButton;
 	}
 
 	public void setMenuNotificationButton(){
-		this.MenuNotificationButton = MenuNotificationButton;
+		this.menuNotificationButton = menuNotificationButton;
 	}
 
 	public void setExportOrdersButton(DefaultButton exportOrdersButton) {

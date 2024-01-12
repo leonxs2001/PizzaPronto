@@ -15,9 +15,9 @@ public class MyApplicationRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        RoleVO defaultRole = new RoleVO("default");
-        RoleVO adminRole = new RoleVO("admin");
-        userDAO.saveUser(new UserVO("default", "passwort", defaultRole));
-        userDAO.saveUser(new UserVO("admin", "passwort", adminRole));
+        RoleVO customer = new RoleVO("customer");
+        RoleVO admin = new RoleVO("admin");
+        userDAO.saveUser(new UserVO("customerDario", "darioistcool", customer));
+        userDAO.saveUser(new UserVO("adminDario", "darioistcooler", admin));
     }
 }
