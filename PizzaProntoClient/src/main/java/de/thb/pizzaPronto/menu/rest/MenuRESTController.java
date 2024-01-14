@@ -26,32 +26,12 @@ public class MenuRESTController implements IMenuRESTController{
 
     @Override
     public void importFromInputStream(InputStream fileInputStream) throws FailedRESTCallException, NoAuthenticatedUserException {
-        HttpClient httpClient = HttpClient.newHttpClient();
-
-        try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(MENU_URL + "/import"))
-                    .header("Content-Type", "application/json")
-                    .header("Accept", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofInputStream(() -> fileInputStream))
-                    .build();
-
-            request = authenticationRESTController.authenticateHttpRequest(request);
-
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-            if (response.statusCode() != 200) {
-                throw new FailedRESTCallException();
-            }
-
-        } catch (InterruptedException | IOException e) {
-            e.printStackTrace();
-            throw new FailedRESTCallException();
-        }
+        // not implemented in prototype
     }
 
     @Override
     public OutputStream exportMenu() throws FailedRESTCallException, NoAuthenticatedUserException {
+        // not implemented in prototype
         return null;
     }
 

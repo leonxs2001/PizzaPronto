@@ -429,49 +429,18 @@ public class MenuGUIController {
             }
         });
 
-        // import
- //       JButton importButton = menuPanel.getLoadButton();
- //       importButton.addActionListener(e -> import_irgendwas());
-
-        // export
-//        JButton exportButton = menuPanel.getSaveButton();
-//        exportButton.addActionListener(e -> export());
+        // change dish type
         JComboBox<String> dishComboBox = menuPanel.getDishComboBox();
         dishComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String typeOfDish = (String) menuPanel.getDishComboBox().getSelectedItem();
 
-                if (typeOfDish.equals("Pasta")) {
-                    menuPanel.getTypeComboBox().setEnabled(true);
-                    menuPanel.getSizeComboBox().setEnabled(false);
-                    menuPanel.getIngredientTextField().setEnabled(true);
-                    menuPanel.getIngredientsTable().setEnabled(true);
-                    menuPanel.getAddIngredientButton().setEnabled(true);
-                    menuPanel.getRemoveIngredientButton().setEnabled(true);
-
-
-                } else if (typeOfDish.equals("Pizza")) {
-                    menuPanel.getSizeComboBox().setEnabled(true);
-                    menuPanel.getTypeComboBox().setEnabled(false);
-                    menuPanel.getIngredientTextField().setEnabled(true);
-                    menuPanel.getIngredientsTable().setEnabled(true);
-                    menuPanel.getAddIngredientButton().setEnabled(true);
-                    menuPanel.getRemoveIngredientButton().setEnabled(true);
-
-
-                } else if (typeOfDish.equals("Dessert")) {
-                    menuPanel.getSizeComboBox().setEnabled(false);
-                    menuPanel.getTypeComboBox().setEnabled(false);
-                    menuPanel.getIngredientTextField().setEnabled(false);
-                    menuPanel.getIngredientsTable().setEnabled(false);
-                    menuPanel.getAddIngredientButton().setEnabled(false);
-                    menuPanel.getRemoveIngredientButton().setEnabled(false);
-
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    changecurrentDishType();
                 }
-            }
+
         });
 
+        // add ingredient
         JButton addIngredientButton = menuPanel.getAddIngredientButton();
         addIngredientButton.addActionListener(new ActionListener() {
 
@@ -553,12 +522,17 @@ public class MenuGUIController {
     }
 
     public void importMenu(InputStream fileInputStream) {
-        try {
-            menuRESTController.importFromInputStream(fileInputStream);
-        } catch (FailedRESTCallException | NoAuthenticatedUserException ex) {
-            new ExceptionPanel(ex);
-        }
+        // not implemented in prototype
     }
+
+    public void exportMenu() {
+        // not implemented in prototype
+    }
+
+    private void changecurrentDishType() {
+        menuPanel.changeCurrentDishType();
+    }
+
 
 }
 

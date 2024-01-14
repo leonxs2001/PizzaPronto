@@ -4,6 +4,7 @@ import de.thb.pizzaPronto.generalGui.DefaultButton;
 import de.thb.pizzaPronto.menu.rest.*;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -863,6 +864,38 @@ public class MenuPanel extends JPanel {
 
 
 			getTableModel().addRow(row);
+		}
+	}
+
+	public void changeCurrentDishType() {
+		String typeOfDish = (String) getDishComboBox().getSelectedItem();
+
+		if (typeOfDish.equals("Pasta")) {
+			getTypeComboBox().setEnabled(true);
+			getSizeComboBox().setEnabled(false);
+			getIngredientTextField().setEnabled(true);
+			getIngredientsTable().setEnabled(true);
+			getAddIngredientButton().setEnabled(true);
+			getRemoveIngredientButton().setEnabled(true);
+
+
+		} else if (typeOfDish.equals("Pizza")) {
+			getSizeComboBox().setEnabled(true);
+			getTypeComboBox().setEnabled(false);
+			getIngredientTextField().setEnabled(true);
+			getIngredientsTable().setEnabled(true);
+			getAddIngredientButton().setEnabled(true);
+			getRemoveIngredientButton().setEnabled(true);
+
+
+		} else if (typeOfDish.equals("Dessert")) {
+			getSizeComboBox().setEnabled(false);
+			getTypeComboBox().setEnabled(false);
+			getIngredientTextField().setEnabled(false);
+			getIngredientsTable().setEnabled(false);
+			getAddIngredientButton().setEnabled(false);
+			getRemoveIngredientButton().setEnabled(false);
+
 		}
 	}
 
