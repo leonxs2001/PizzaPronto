@@ -19,10 +19,10 @@ public abstract class IngredientComponent implements Serializable{
 	protected String name;
 	protected float percentage;
 	
-	public IngredientComponent(String name, float precentage) {
+	public IngredientComponent(String name, float percentage) {
 		super();
 		this.name = name;
-		this.percentage = precentage;
+		this.percentage = percentage;
 	}
 	
 	public IngredientComponent(String name) {

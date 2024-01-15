@@ -4,7 +4,6 @@ import de.thb.pizzaPronto.generalGui.DefaultButton;
 import de.thb.pizzaPronto.menu.rest.*;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -697,7 +696,6 @@ public class MenuPanel extends JPanel {
 
 	public DishVO getDishFromInputs(){
 		String type = (String) dishComboBox.getSelectedItem();
-		System.out.println(type);
 		int number = Integer.parseInt(numberTextField.getText());
 		int pizzaSize = (int) sizeComboBox.getSelectedItem();
 		int pastaType = (int) typeComboBox.getSelectedItem();
@@ -705,7 +703,7 @@ public class MenuPanel extends JPanel {
 		float price = Float.parseFloat(priceTextField.getText());
 		ArrayList<IngredientComponent> ingredients = new ArrayList<IngredientComponent>();
 		for (int i = 0; i < ingredientsTable.getRowCount(); i++) {
-			IngredientComponent ingredient = new IngredientComposite((String) ingredientsTable.getValueAt(i, 0));
+			IngredientComponent ingredient = new IngredientLeaf((String) ingredientsTable.getValueAt(i, 0));
 			ingredients.add(ingredient);
 		}
 		DishVO dish = null;
